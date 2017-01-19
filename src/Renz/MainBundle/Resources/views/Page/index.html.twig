@@ -1,0 +1,64 @@
+{% extends '::base.html.twig' %}
+
+{% block content %}
+
+<style>
+.error{color:red;}
+</style>
+
+<script>
+$(function (){
+	$('#bookingform').validate({
+		rules: {
+			'email': {
+		    	required: true,
+		    	email: true
+			},
+			'roomid': {
+			   required: true,
+			},
+			'checkin': {
+				   required: true,
+				},
+			'checkout': {
+			    required: true,
+			},
+			'guests': {
+			    required: true,
+			},
+		}
+	});
+});
+</script>
+
+<!-- Revolution Slider -->
+{{ include('MainBundle:includes:homepage/_slider.html.twig') }}
+
+<!-- Reservation form -->
+{{ include('MainBundle:includes:homepage/_reservationslider.html.twig') }}
+
+<!-- Rooms -->
+{{ include('MainBundle:includes:homepage/_guestrooms.html.twig') }}
+
+<!-- USP's -->
+{{ include('MainBundle:includes:homepage/_upssection.html.twig') }}
+
+<!-- Parallax Effect -->
+{{ include('MainBundle:includes:homepage/_parallaxeffect.html.twig') }}
+
+<!-- Gallery -->
+{{ include('MainBundle:includes:homepage/_gallery.html.twig') }}
+
+<div class="container">
+  <div class="row">
+  	
+    <!-- Testimonials -->
+    {{ include('MainBundle:includes:homepage/_testimonials.html.twig') }}
+    
+    <!-- Hotel Tabs -->
+    {{ include('MainBundle:includes:homepage/_hoteltabs.html.twig') }}
+    
+  </div>
+</div>
+    
+{% endblock %}

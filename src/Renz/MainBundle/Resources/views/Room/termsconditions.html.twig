@@ -1,0 +1,18 @@
+{% extends '::printablebase.html.twig' %}
+
+{% block content %}
+<div class="container">
+  <div class="row"> 
+            <div class="col-md-12">
+              
+              <h2 align="center">ROOM / BOOKING POLICIES</h2>
+              <hr />
+              <br />
+              
+              <h3>{{ entity.title }}</h3>
+              <p>{{ entity.detail | raw }}</p>
+              
+            </div>
+  </div>
+</div>
+{% endblock %}

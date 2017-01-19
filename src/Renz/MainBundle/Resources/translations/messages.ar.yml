@@ -1,0 +1,79 @@
+site:
+  title: فندق رنز
+  
+  #top header navigation
+  topheader:
+    login: تسجيل دخول 
+    register: مستخدم جديد
+  
+  #top navigation
+  topnav:
+    home: الرئيسية
+    aboutus: من نحن
+    facilities: الخدمات
+    rooms: الغرف
+    news: الأخبار
+    gallery: معرض الصور
+    contact: إتصل بنا
+    
+  #messages
+  
+  
+  #buttons
+  button:
+    seeRooms: مشاهدة الغرف
+    bookNow: إحجز الآن
+    submit: عرض
+    contact: اتصال
+
+  #labels - for some fields etc
+  label:
+    roomType: أنواع الغرف
+    selectRoom: أختر غرفة
+    checkin: تاريخ الدخول 
+    checkout: تاريخ الخروج  
+    guests: الضيوف  
+    selectRoomFirst: إختر غرفة أولاً 
+    guestFavouriteRoom: الغرف المفضلة  
+    aboutRenzHotel: نبذة عن فندق رنز
+    whenWouldYouLikeToStay: متى تتوقع  
+    hotelTabs: فندق
+    whatOurVisitorsExperienced: ما لدينا من ذوي الخبرة آخر
+    galleryHighlights: معرض الصور
+    facilitiesAtRenzHotel: المرافق في فندق رنز
+    readmore: اقرأ المزيد
+    welcomeToRenzHotel: فندق رنز يرحب بكم
+    renzHotel: فندق رنز
+    address: عنوان
+    fromOurNews: من أخبارنا
+    receiveOurNewsLetter: تلقي رسائلنا الإخبارية
+    newsletterSubscriptionLabel: يرجى إدخال عنوان البريد الإلكتروني الخاص بك أدناه ثم اضغط على تقدم إلى الاشتراك في الرسالة الإخبارية لدينا!
+    enterYourEmailAddress: من فضلك ادخل بريدك الإلكتروني
+    sar: ريال
+    night: ليلة
+    social: اجتماعي
+    yourMessage: رسالتك
+    subject: موضوع
+    other: آخر
+    room: غرفة
+    booking: حجز
+    yourName: اسمك
+    email: البريد الإلكتروني
+    all: كل
+    postedByAdministrator: نشرت من قبل:
+    foodDrink: الطعام و الشراب
+    internet: الإنترنت
+    parking: موقف سيارات
+    services: الخدمات
+    general: عام
+    englishLang: اللغة الإنجليزية
+    arabicLang: اللغة العربية
+    viewAllRooms: عرض جميع الغرف
+    roomList: قائمة غرفة
+    roomDetail: غرفة التفاصيل
+    reservation: حجز
+    includeBreakFast: ويشمل تفطر
+    moreDetail: مزيد من التفاصيل
+    policiesOfRenzHotel: سياسات رنز فندق
+    cardAcceptedAtRenzHotel: البطاقات المقبولة في رنز فندق
+    preAuthorizeCard: رنز فندق تقبل هذه البطاقات وتحتفظ لنفسها الحق في الموافقة المسبقة على البطاقة قبل الوصول.

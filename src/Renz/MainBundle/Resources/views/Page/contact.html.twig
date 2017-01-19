@@ -1,0 +1,118 @@
+{% extends '::base.html.twig' %}
+
+{% block content %}
+
+<style>
+.error {
+	color: red;
+}
+</style>
+
+<script type="text/javascript">
+var mapMarkerIcon = "{{ asset('bundles/main/images/ui/gmap-icon.png') }}";
+$('document').ready(function(){
+	$('#contactform').validate();
+});
+</script>
+
+<!-- GMap -->
+<div id="map">
+  <p>This will be replaced with the Google Map.</p>
+</div>
+
+<div class="container">
+  <div class="row"> 
+	<!-- Contact form -->
+	<section id="contact-form" class="mt50">
+	  <div class="col-md-8">
+		<h2 class="lined-heading"><span>{% if app.request.locale=='ar' %}{{ entity.titlear }}{% else %}{{ entity.title }}{% endif %}</span></h2>
+		
+		<p>{% if app.request.locale=='ar' %}{{ entity.longDetailar | raw }}{% else %}{{ entity.longDetail | raw }}{% endif %}</p>
+		
+		{% for flashMessage in app.session.flashbag.get('error') %}
+			{% if flashMessage %}
+			<div id="message">
+				<h1>Email Sent Successfully!</h1>
+	    		<div class="alert alert-success alert-dismissable">
+	    			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+	    			{{ flashMessage | raw }}
+	    		</div>
+			</div>
+			{% endif %}
+		{% endfor %}
+		
+		<!-- Error message display -->
+		<form class="clearfix mt50" role="form" method="post" action="{{ path('renz_main_page_contact') }}" name="contactform" id="contactform">
+		  
+		  <div class="row">
+			<div class="col-md-6">
+			  <div class="form-group">
+				<label for="name" accesskey="U"><span class="required">*</span> {{ 'site.label.yourName' | trans }}</label>
+				<input name="name" type="text" id="name" class="form-control" required="required" />
+			  </div>
+			</div>
+			<div class="col-md-6">
+			  <div class="form-group">
+				<label for="email" accesskey="E"><span class="required">*</span> {{ 'site.label.email' | trans }}</label>
+				<input name="email" type="text" id="email" class="form-control" required="required" />
+			  </div>
+			</div>
+		  </div>
+		  
+		  <div class="form-group">
+			<label for="subject" accesskey="S">{{ 'site.label.subject' | trans }}</label>
+			<select name="subject" id="subject" class="form-control" required="required">
+			  <option value="Booking">{{ 'site.label.booking' | trans }}</option>
+			  <option value="Room">{{ 'site.label.room' | trans }}</option>
+			  <option value="other">{{ 'site.label.other' | trans }}</option>
+			</select>
+		  </div>
+		  
+		  <div class="form-group">
+			<label for="comments" accesskey="C"><span class="required">*</span> {{ 'site.label.yourMessage' | trans }}</label>
+			<textarea name="comments" rows="9" id="comments" class="form-control" required="required"></textarea>
+		  </div>
+		  
+		  <button id="btn-submit" class="btn  btn-lg btn-primary"> {{ 'site.button.submit' | trans }} </button>
+		</form>
+		
+	  </div>
+	</section>
+	
+	<!-- Contact details -->
+	<section class="contact-details mt50">
+	  <div class="col-md-4">
+		<h2 class="lined-heading"><span>{{ 'site.label.address' | trans }}</span></h2>
+		<a href="{{ asset('bundles/main/images/contact/contact-lg-01.jpg') }}" data-rel="prettyPhoto">
+			<img src="{{ asset('bundles/main/images/contact/contact-01.jpg') }}" alt="Reception" class="img-thumbnail img-responsive">
+		</a>
+		
+		<address class="mt50">
+			{{ render(controller('MainBundle:Common:address')) }}
+		</address>
+		
+		<h2 class="lined-heading mt50"><span>{{ 'site.label.social' | trans }}</span></h2>
+		<div class="row">
+		  <div class="col-xs-4">
+			<div class="box-icon"> <a href="http://www.facebook.com/renzhotel">
+			  <div class="circle"><i class="fa fa-facebook fa-lg"></i></div>
+			  </a> </div>
+		  </div>
+		  <div class="col-xs-4">
+			<div class="box-icon"> <a href="http://www.twitter.com/renzhotel">
+			  <div class="circle"><i class="fa fa-twitter fa-lg"></i></div>
+			  </a> </div>
+		  </div>
+		  <div class="col-xs-4">
+			<div class="box-icon"> <a href="http://www.linkedin.com/renzhotel">
+			  <div class="circle"><i class="fa fa-linkedin fa-lg"></i></div>
+			  </a> </div>
+		  </div>
+		</div>
+	  </div>
+	</section>
+	
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,143 @@
+{% extends "::admin.html.twig" %}
+
+{% block pagetitle %}Hotel Policies{% endblock %}
+	
+{% block javascriptcode %}
+<script type="text/javascript">
+
+$(document).ready(function(){
+	/* setup navigation, content boxes, etc... */
+	Administry.setup();
+
+	$('#renz_modelbundle_hotelpolicy_detail').wysiwyg({
+	    controls: {
+	      strikeThrough : { visible : true },
+	      underline     : { visible : true },
+	      
+	      justifyLeft   : { visible : true },
+	      justifyCenter : { visible : true },
+	      justifyRight  : { visible : true },
+	      justifyFull   : { visible : true },
+	      
+	      indent  : { visible : true },
+	      outdent : { visible : true },
+	      
+	      subscript   : { visible : true },
+	      superscript : { visible : true },
+	      
+	      undo : { visible : true },
+	      redo : { visible : true },
+	      
+	      insertOrderedList    : { visible : true },
+	      insertUnorderedList  : { visible : true },
+	      insertHorizontalRule : { visible : true },
+
+	      h4: {
+	              visible: true,
+	              className: 'h4',
+	              command: $.browser.msie ? 'formatBlock' : 'heading',
+	              arguments: [$.browser.msie ? '<h4>' : 'h4'],
+	              tags: ['h4'],
+	              tooltip: 'Header 4'
+	      },
+	      h5: {
+	              visible: true,
+	              className: 'h5',
+	              command: $.browser.msie ? 'formatBlock' : 'heading',
+	              arguments: [$.browser.msie ? '<h5>' : 'h5'],
+	              tags: ['h5'],
+	              tooltip: 'Header 5'
+	      },
+	      h6: {
+	              visible: true,
+	              className: 'h6',
+	              command: $.browser.msie ? 'formatBlock' : 'heading',
+	              arguments: [$.browser.msie ? '<h6>' : 'h6'],
+	              tags: ['h6'],
+	              tooltip: 'Header 6'
+	      },
+	      
+	      cut   : { visible : true },
+	      copy  : { visible : true },
+	      paste : { visible : true },
+	      html  : { visible: true }
+	    }
+	  });
+});
+</script>
+{% endblock %}
+
+{% block contentsinglecolumn %}
+
+{{ form_start(form) }}
+
+	<!-- Left column/section -->
+	<section class="column width6 first">
+	
+	<h3>Add New Policy</h3>
+	
+		<fieldset>
+			<legend>Fill in details and press save..</legend>
+			
+			<p>
+				{{ form_label(form.title) }}<br/>
+				{{ form_widget(form.title) }}
+				<small>e.g. checkin - from 17:00</small>
+			</p>
+			
+			<p>
+				{{ form_label(form.detail) }}
+				<br/>
+				{{ form_widget(form.detail) }}
+			</p>
+			
+			<p class="box" style="text-align: center;">IN ARABIC</p>
+			
+			<p>
+				{{ form_label(form.titlear) }}<br/>
+				{{ form_widget(form.titlear) }}
+				<small>e.g. checkin - from 17:00</small>
+			</p>
+			
+			<p>
+				{{ form_label(form.detailar) }}
+				<br/>
+				{{ form_widget(form.detailar) }}
+			</p>
+			
+			<p class="box"><input type="submit" class="btn btn-green big" value="Save"/> or <a href="{{ path('renz_admin_hotelpolicy_index') }}">Cancel</a></p>
+	
+		</fieldset>
+	
+	</section>
+	<!-- End of Left column/section -->
+	
+	<!-- Right column/section -->
+	<aside class="column width2">
+		
+		<p><a href="{{ path('renz_admin_hotelpolicy_index') }}" class="btn btn-special"><img SRC="{{ asset('bundles/admin/img/page_white_go.png') }}" class="icon" alt=""/>Cancel and go back</a></p>
+		
+		<div class="content-box">
+			<header>
+				<h3>Visibility</h3>
+			</header>
+			<section>
+				Choose whether or not you want this item to be publicly visible.
+				<p>{{ form_widget(form.status) }}</p>
+			</section>
+		</div>
+		 
+		<div id="rightmenu">
+			<dl class="first">
+				<dt><img width="16" height="16" alt="" SRC="img/help.png"></dt>
+				<dd><a href="#">Help</a></dd>
+				<dd class="last">If you are a new user, you should read "Getting started"</dd>							
+			</dl>
+		</div>
+		
+	</aside>
+	<!-- End of Right column/section -->
+
+{{ form_end(form) }}
+
+{% endblock %}

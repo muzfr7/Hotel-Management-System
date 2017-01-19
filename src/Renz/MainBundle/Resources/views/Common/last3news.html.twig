@@ -1,0 +1,13 @@
+<ul>
+{% for entity in entities %}
+<li>
+  <article>
+	<a href="{{ path('renz_main_page_news', { 'slug': entity.slug }) }}">
+		{% if app.request.locale=='ar' %}{{ entity.titlear }}{% else %}{{ entity.title }}{% endif %}
+		<br>
+		{{ entity.createdAt | date('M d, Y') }}
+	</a>
+  </article>
+</li>
+{% endfor %}
+</ul>

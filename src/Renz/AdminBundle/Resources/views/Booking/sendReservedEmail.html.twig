@@ -1,0 +1,139 @@
+<html>
+<head>
+	<title>Your Reservation at Renz Hotel</title>
+	<style>
+	.row-heading{
+		background:#cccccc;
+	}
+	th{text-align:left; background-color:#eeeeee; background:#eeeeee; height:30px !important; text-transform:uppercase;}
+	</style>
+</head>
+<body>
+	<div id="mydiv">
+		
+		<h3>Dear Mr.{{ firstname }} {{ lastname }},</h3>
+		<p></p>
+		
+		<p>This is to inform you that,</p>
+		<p>Your reservation at <b>Renz Hotel</b> has been confirmed..</p>
+		<p>Listed below is your reservation detail:</p>
+		<table class="display stylized" width="100%">
+		<tbody>
+			<tr class="row-heading"><td colspan="100%" align="center"><b>BOOKING INFORMATION</b></td></tr>
+			<tr>
+				<th width="120">Reference #</th>
+				<td>{{ bookingreference }}</td>
+			</tr>
+			<tr>
+				<th width="120">ROOM</th>
+				<td>{{ room }}</td>
+			</tr>
+			<tr>
+				<th>Guests</th>
+				<td>{{ guests }}</td>
+			</tr>
+			<tr>
+				<th>Checkin</th>
+				<td>{{ dateCheckin|date('jS l, F Y') }}</td>
+			</tr>
+			<tr>
+				<th>Checkout</th>
+				<td>{{ dateCheckout|date('jS l, F Y') }}</td>
+			</tr>
+			<tr>
+				<th>Total Days</th>
+				<td>{{ totalDays }}</td>
+			</tr>
+			<tr>
+				<th>Special Requests</th>
+				<td>{{ specialRequests }}</td>
+			</tr>
+			<tr>
+				<th>Booking Date</th>
+				<td>{{ createdAt|date('jS l, F Y - H:i:s') }}</td>
+			</tr>
+			<tr>
+				<th>Booking Status</th>
+				<td><span style="color:green;">Reserved</span></td>
+			</tr>
+			
+			<tr><td colspan="100%">&nbsp;</td></tr>
+			<tr class="row-heading"><td colspan="100%" align="center"><b>PERSONAL INFORMATION</b></td></tr>
+			<tr>
+				<th>First Name</th>
+				<td>{{ firstname }}</td>
+			</tr>
+			<tr>
+				<th>Last Name</th>
+				<td>{{ lastname }}</td>
+			</tr>
+			<tr>
+				<th>Email</th>
+				<td>{{ email }}</td>
+			</tr>
+			<tr>
+				<th>Address</th>
+				<td>{{ address }}</td>
+			</tr>
+			<tr>
+				<th>City</th>
+				<td>{{ city }}</td>
+			</tr>
+			<tr>
+				<th>Zip Code</th>
+				<td>{{ zipcode }}</td>
+			</tr>
+			<tr>
+				<th>Country</th>
+				<td>{{ country }}</td>
+			</tr>
+			<tr>
+				<th>Mobile</th>
+				<td>{{ mobile }}</td>
+			</tr>
+			
+			<tr><td colspan="100%">&nbsp;</td></tr>
+			<tr class="row-heading"><td colspan="100%" align="center"><b>PAYMENT INFORMATION</b></td></tr>
+			<tr>
+				<th>Total Price</th>
+				<td>SAR {{ totalprice }}</td>
+			</tr>
+			<tr>
+				<th>Card Owner Name</th>
+				<td>{{ cardownername }}</td>
+			</tr>
+			<tr>
+				<th>Card Type</th>
+				<td>{{ cardtype }}</td>
+			</tr>
+			<tr>
+				<th>Card Number</th>
+				<td>{{ cardnumber }}</td>
+			</tr>
+			<tr>
+				<th>Expiry Month</th>
+				<td>{{ expiryMonth }}</td>
+			</tr>
+			<tr>
+				<th>Expiry Year</th>
+				<td>{{ expiryYear }}</td>
+			</tr>
+			
+			<tr class="row-heading"><td colspan="100%" align="center"><b>POLICY</b></td></tr>
+	            <tr>
+	                <td colspan="2">{{ policy|raw }}</td>
+	            </tr>
+		</tbody>
+		</table>
+		
+		<br />
+		<p>For further information, please visit http://www.renz.com.sa</p>
+		<br />
+		<hr />
+		<p>Renz Hotel</p>
+		<p>Jeddah, Saudi Arabia</p>
+	
+	</div>
+
+</body>
+</html>

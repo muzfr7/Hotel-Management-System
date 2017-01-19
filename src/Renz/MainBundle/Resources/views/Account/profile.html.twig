@@ -1,0 +1,220 @@
+{% extends '::base.html.twig' %}
+
+{% block content %}
+
+<style>
+	.error{color:red;}
+</style>
+
+<script>
+$(function (){
+	$('#bookingform').validate({
+		rules: {
+			'firstname': {
+		    	required: true,
+			},
+			'lastname': {
+			   required: true,
+			},
+			'city': {
+			     required: true,
+			},
+			'country': {
+				required: true,
+			},
+			'mobile': {
+				  required: true,
+			      number: true
+			},
+		},
+	});
+});
+</script>
+
+<!-- Parallax Effect -->
+<script type="text/javascript">$(document).ready(function(){$('#parallax-pagetitle').parallax("50%", -0.55);});</script>
+
+<section class="parallax-effect">
+  <div id="parallax-pagetitle" style="background-image: url({{ asset('bundles/main/images/parallax/parallax-01.jpg') }});">
+    <div class="color-overlay"> 
+      <!-- Page title -->
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12">
+            <ol class="breadcrumb">
+              <li><a href="{{ path('renz_main_index_index') }}">Home</a></li>
+              <li class="active">Profile</li>
+            </ol>
+            <h1>Your Profile</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<div class="container">
+  <div class="row"> 
+    
+    	<!-- Slider -->
+	    <section class="room-slider standard-slider mt50">
+	      <div class="col-sm-12 col-md-8">
+	      	
+	      	<h2 class="lined-heading"><span>Your Details</span></h2>
+	      	
+	      	<form class="clearfix mt50" role="form" method="post" action="{{ path('renz_main_account_profile') }}" name="bookingform" id="bookingform" novalidate="novalidate">
+				  
+			  <div class="row">
+				<div class="col-md-6">
+				  <div class="form-group">
+					<label for="firstname" accesskey="U"><span class="required">*</span> First Name</label>
+					<input name="firstname" type="text" id="firstname" value="{{ customer.firstname }}" class="form-control" required="required" />
+				  </div>
+				</div>
+				<div class="col-md-6">
+				  <div class="form-group">
+					<label for="lastname" accesskey="E"><span class="required">*</span> Last Name</label>
+					<input name="lastname" type="text" id="lastname" value="{{ customer.lastname }}" class="form-control" required="required" />
+				  </div>
+				</div>
+			  </div>
+			  
+			  <br /><br />
+			  <h2 class="lined-heading"><span>Your Address</span></h2>
+			  
+			  <div class="row">
+				<div class="col-md-6">
+				  <div class="form-group">
+					<label for="address" accesskey="U">Address</label>
+					<input name="address" type="text" id="address" value="{{ customer.address }}" class="form-control" />
+				  </div>
+				</div>
+				<div class="col-md-6">
+				  <div class="form-group">
+					<label for="city" accesskey="E"><span class="required">*</span> City</label>
+					<input name="city" type="text" id="city" value="{{ customer.city }}" class="form-control" required="required" />
+				  </div>
+				</div>
+			  </div>
+			  
+			  <div class="row">
+				<div class="col-md-6">
+				  <div class="form-group">
+					<label for="zipcode" accesskey="U">Zip Code</label>
+					<input name="zip" type="text" id="zip" value="{{ customer.zip }}" class="form-control" />
+				  </div>
+				</div>
+				<div class="col-md-6">
+				  <div class="form-group">
+					<label for="country" accesskey="E"><span class="required">*</span> Country</label>
+					<select name="country" id="country" class="form-control" required="required">
+						<option value="">-Select-</option>
+						{% for country in countries %}
+							<option value="{{ country.id }}" {% if customer.country.id==country.id %}selected{% endif %}>{{ country.shortname }}</option>
+						{% endfor %}
+					</select>
+				  </div>
+				</div>
+			  </div>
+			  
+			  <div class="row">
+				<div class="col-md-6">
+				  <div class="form-group">
+					<label for="mobile" accesskey="U"><span class="required">*</span> Mobile</label>
+					<input name="mobile" type="text" id="mobile" value="{{ customer.mobile }}" class="form-control" required="required" />
+				  </div>
+				</div>
+			  </div>
+			  
+			  <br /><br />
+			  <h2 class="lined-heading"><span>Payment Information</span></h2>
+			  
+			  <div><img src="{{ asset('bundles/main/images/cards.jpg') }}" /></div>
+			  <br />
+			  
+			  <div class="row">
+				<div class="col-md-6">
+				  <div class="form-group">
+					<label for="cardownername" accesskey="U"> Card Owner Name</label>
+					<input name="cardownername" type="text" id="cardownername" value="{{ customer.cardownername }}" class="form-control" />
+				  </div>
+				</div>
+			  </div>
+			  
+			  <div class="row">
+			  	<div class="col-md-6">
+				  <div class="form-group">
+					<label for="cardtype" accesskey="S"> Credit card type</label>
+					<select name="cardtype" id="cardtype" class="form-control">
+					  <option value="">-Select-</option>
+					  {% for cardtype in cardtypes %}
+							<option value="{{ cardtype.id }}" 
+							{% if customer.cardtype %}
+								{% if customer.cardtype.id==cardtype.id %}selected{% endif %}
+							{% endif %}	
+							>
+							{{ cardtype.title }}
+							</option>
+						{% endfor %}
+					</select>
+				  </div>
+			  	</div>
+			  	
+				<div class="col-md-6">
+				  <div class="form-group">
+					<label for="cardnumber" accesskey="U"> Credit card number</label>
+					<input name="cardnumber" type="text" id="cardnumber" value="{{ customer.cardnumber }}" class="form-control" />
+				  </div>
+				</div>
+			  </div>
+			  
+			  <div class="row">
+			  	<div class="col-md-6">
+				  <div class="form-group">
+					<div><label for="expirydate_month" accesskey="S"> Expiration date</label></div>
+					<select name="expiryMonth" id="expiryMonth" class="form-control" style="width:180px; float:left;">
+					  <option value="">-Select-</option>
+					  {% for cmonth in cardmonth %}
+							<option value="{{ cmonth.id }}" 
+							{% if customer.expiryMonth %}
+								{% if customer.expiryMonth.id==cmonth.id %}selected{% endif %}
+							{% endif %}
+							>
+							{{ cmonth.title }}
+							</option>
+						{% endfor %}
+					</select>
+					
+					<select name="expiryYear" id="expiryYear" class="form-control" style="width:150px; float:right;">
+					  <option value="">-Select-</option>
+					  {% for cyear in cardyear %}
+							<option value="{{ cyear.id }}" 
+							{% if customer.expiryYear %}
+								{% if customer.expiryYear.id==cyear.id %}selected{% endif %}
+							{% endif %}
+							>
+							{{ cyear.title }}
+							</option>
+						{% endfor %}
+					</select>
+					
+					<div style="clear:both;"></div>
+				  </div>
+				</div>
+			  </div>
+			  
+			  <button id="btn-submit" class="btn  btn-lg btn-primary"> Update </button> | 
+			  <a href="{{ path('renz_main_account_index') }}" class="btn btn-lg btn-default">Cancel</a>
+			</form>
+	      	
+	      </div>
+	    </section>
+	    
+	    <!-- right nav -->
+		{{ include('MainBundle:includes:account/_rightnav.html.twig') }}
+    
+  </div>
+</div>
+
+{% endblock %}

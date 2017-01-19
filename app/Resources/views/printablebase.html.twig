@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Renz Hotel - Jeddah, Saudi Arabia</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
+
+	<!-- Stylesheets -->
+	{% block stylesheets %}
+    	<link href="{{ asset('bundles/main/css/animate.css') }}" rel="stylesheet" />
+    	<link href="{{ asset('bundles/main/css/bootstrap.css') }}" rel="stylesheet" />
+    	<link href="{{ asset('bundles/main/css/owl.carousel.css') }}" rel="stylesheet" />
+    	<link href="{{ asset('bundles/main/css/font-awesome.min.css') }}" rel="stylesheet" />
+    	<link href="{{ asset('bundles/main/css/owl.theme.css') }}" rel="stylesheet" />
+    	<link href="{{ asset('bundles/main/css/prettyPhoto.css') }}" rel="stylesheet" />
+    	<link href="{{ asset('bundles/main/css/smoothness/jquery-ui-1.10.4.custom.min.css') }}" rel="stylesheet" />
+    	<link href="{{ asset('bundles/main/rs-plugin/css/settings.css') }}" rel="stylesheet" />
+    	<link href="{{ asset('bundles/main/css/theme.css') }}" rel="stylesheet" />
+    	<link href="{{ asset('bundles/main/css/colors/turquoise.css') }}" rel="stylesheet" />
+    	<link href="{{ asset('bundles/main/css/responsive.css') }}" rel="stylesheet" />
+    	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600,700" />
+    {% endblock %}
+    <script src="{{ asset('bundles/main/js/jquery-1.11.0.min.js') }}"></script>
+</head>
+
+<body class="pattern-1">
+	
+	<div class="boxed">
+    	{% block content %}{% endblock %}
+	</div>
+	
+	{% block javascripts %}
+    	<!-- Javascripts -->
+		<script src="{{ asset('bundles/main/js/bootstrap.min.js') }}"></script>
+		<script src="{{ asset('bundles/main/js/bootstrap-hover-dropdown.min.js') }}"></script>
+		<script src="{{ asset('bundles/main/js/owl.carousel.min.js') }}"></script>
+		<script src="{{ asset('bundles/main/js/jquery.parallax-1.1.3.js') }}"></script>
+		<script src="{{ asset('bundles/main/js/jquery.nicescroll.js') }}"></script>
+		<script src="{{ asset('bundles/main/js/jquery.prettyPhoto.js') }}"></script>
+		<script src="{{ asset('bundles/main/js/jquery-ui-1.10.4.custom.min.js') }}"></script>
+		<script src="{{ asset('bundles/main/js/jquery.jigowatt.js') }}"></script>
+		<script src="{{ asset('bundles/main/js/jquery.sticky.js') }}"></script>
+		<script src="{{ asset('bundles/main/js/waypoints.min.js') }}"></script>
+		<script src="{{ asset('bundles/main/js/jquery.isotope.min.js') }}"></script>
+		<script src="{{ asset('bundles/main/js/jquery.gmap.min.js') }}"></script>
+		<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+		<script src="{{ asset('bundles/main/rs-plugin/js/jquery.themepunch.plugins.min.js') }}"></script>
+		<script src="{{ asset('bundles/main/rs-plugin/js/jquery.themepunch.revolution.min.js') }}"></script>
+		<!-- <script src="{{ asset('bundles/main/js/switch.js') }}"></script> -->
+		<script src="{{ asset('bundles/main/libs/jqueryvalidate/jquery.validate.min.js') }}"></script>
+		<script src="{{ asset('bundles/main/libs/jqueryvalidate/additional-methods.js') }}"></script>
+		<script src="{{ asset('bundles/main/js/custom.js') }}"></script>
+		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+			<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+			<script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+		<![endif]-->
+    {% endblock %}
+	
+</body>
+
+</html>

@@ -1,0 +1,64 @@
+<script type="text/javascript">
+function selectedQty(qty){
+	$('#guests').html("<option value=''>Wait..</option>");
+	var route = "{{ path('renz_main_room_getcapacity', { 'id': "PLACEHOLDER" }) }}";
+	var url = route.replace("PLACEHOLDER", qty);
+	$.get(url).done(function(data){
+		$('#guests').html(data);
+	});
+}
+</script>
+
+<section id="reservation-form">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">           
+        <form class="form-inline reservation-horizontal clearfix" role="form" method="get" action="{{ path('renz_main_room_checkifavailable') }}" name="reservationform" id="bookingform">
+        <div id="message"></div><!-- Error message display -->
+          <div class="row">
+            <div class="col-sm-4">
+              <div class="form-group">
+                <label for="room">{{ 'site.label.roomType' | trans }}</label>
+                <select class="form-control" name="roomid" id="roomid" style="color:#000000;" onchange="return selectedQty(this.value);">
+                  <option selected="selected" disabled="disabled">{{ 'site.label.selectRoom' | trans }}</option>
+                  {{ render(controller('MainBundle:Common:homepagebookingroomlist')) }}
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-2">
+              <div class="form-group">
+                <label for="checkin">{{ 'site.label.checkin' | trans }}</label>
+                <div class="popover-icon" data-container="body" data-toggle="popover" data-trigger="hover" data-placement="right" data-content="Check-In is from 17:00"> <i class="fa fa-info-circle fa-lg"> </i> </div>
+                <i class="fa fa-calendar infield"></i>
+                <input name="checkin" type="text" id="checkin" class="form-control" placeholder="{{ 'site.label.checkin' | trans }}" style="color:#000000;"/>
+              </div>
+            </div>
+            <div class="col-sm-2">
+              <div class="form-group">
+                <label for="checkout">{{ 'site.label.checkout' | trans }}</label>
+                <div class="popover-icon" data-container="body" data-toggle="popover" data-trigger="hover" data-placement="right" data-content="Check-out is from 12:00 - 13:00"> <i class="fa fa-info-circle fa-lg"> </i> </div>
+                <i class="fa fa-calendar infield"></i>
+                <input name="checkout" type="text" id="checkout" class="form-control" placeholder="{{ 'site.label.checkout' | trans }}" style="color:#000000;"/>
+              </div>
+            </div>
+            <div class="col-sm-2">
+              <div class="form-group">
+                <div class="guests-select">
+                  	<label>{{ 'site.label.guests' | trans }}</label>
+                    <div class="form-group adults">
+                      <select name="guests" id="guests" class="form-control" style="color:#000000;">
+                        <option value="">{{ 'site.label.selectRoomFirst' | trans }}</option>
+                      </select>
+                    </div>
+                  </div>
+              </div>
+            </div>
+            <div class="col-sm-2">
+              <button type="submit" class="btn btn-primary btn-block">{{ 'site.button.bookNow' | trans }}</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

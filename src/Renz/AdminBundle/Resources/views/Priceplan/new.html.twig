@@ -1,0 +1,97 @@
+{% extends "::admin.html.twig" %}
+
+{% block pagetitle %}Price Plan List{% endblock %}
+	
+{% block javascriptcode %}
+<script type="text/javascript">
+
+$(document).ready(function(){
+	
+	/* setup navigation, content boxes, etc... */
+	Administry.setup();
+});
+</script>
+{% endblock %}
+
+{% block contentsinglecolumn %}
+
+{{ form_start(form) }}
+
+	<!-- Left column/section -->
+	<section class="column width6 first">
+	
+	<h3>Add New Price Plan</h3>
+	
+		<fieldset>
+			<legend>Fill in details and press save..</legend>
+			
+			<p>
+				{{ form_label(form.room) }}<br/>
+				{{ form_widget(form.room) }}
+				<small>Select Room</small>
+			</p>
+			
+			<p>
+				<table>
+				<tr>
+					<td>{{ form_label(form.dateStart) }}</td>
+					<td></td>
+					<td>{{ form_label(form.dateEnd) }}</td>
+				</tr>
+				<tr>
+					<td>{{ form_widget(form.dateStart) }}<small>Specify Start Date</small></td>
+					<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -to- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+					<td>{{ form_widget(form.dateEnd) }}<small>Specify End Date</small></td>
+				</tr>
+				</table>
+			</p>
+			
+			<p>
+				<table>
+				<tr>
+					<td>{{ form_label(form.sunday) }}</td>
+					<td>{{ form_label(form.monday) }}</td>
+					<td>{{ form_label(form.tuesday) }}</td>
+					<td>{{ form_label(form.wednesday) }}</td>
+					<td>{{ form_label(form.thursday) }}</td>
+					<td>{{ form_label(form.friday) }}</td>
+					<td>{{ form_label(form.saturday) }}</td>
+				</tr>
+				<tr>
+					<td>{{ form_widget(form.sunday) }}<small>e.g. SAR 100</small></td>
+					<td>{{ form_widget(form.monday) }}<small>e.g. SAR 100</small></td>
+					<td>{{ form_widget(form.tuesday) }}<small>e.g. SAR 100</small></td>
+					<td>{{ form_widget(form.wednesday) }}<small>e.g. SAR 100</small></td>
+					<td>{{ form_widget(form.thursday) }}<small>e.g. SAR 100</small></td>
+					<td>{{ form_widget(form.friday) }}<small>e.g. SAR 100</small></td>
+					<td>{{ form_widget(form.saturday) }}<small>e.g. SAR 100</small></td>
+				</tr>
+				</table>
+			</p>
+			
+			<p class="box"><input type="submit" class="btn btn-green big" value="Save"/> or <a href="{{ path('renz_admin_priceplan_index') }}">Cancel</a></p>
+	
+		</fieldset>
+	
+	</section>
+	<!-- End of Left column/section -->
+	
+	<!-- Right column/section -->
+	<aside class="column width2">
+		
+		<p><a href="{{ path('renz_admin_priceplan_index') }}" class="btn btn-special"><img SRC="{{ asset('bundles/admin/img/page_white_go.png') }}" class="icon" alt=""/>Cancel and go back</a></p>
+		 
+		<div id="rightmenu">
+			<dl class="first">
+				<dt><img width="16" height="16" alt="" SRC="{{ asset('bundles/admin/img/help.png') }}"></dt>
+				<dd><a href="#">Help</a></dd>
+				<dd class="last">If you are a new user, you should read "Getting started"</dd>							
+			</dl>
+		</div>
+		
+	</aside>
+	<!-- End of Right column/section -->
+
+{{ form_end(form) }}
+
+{% endblock %}

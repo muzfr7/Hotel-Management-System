@@ -1,0 +1,48 @@
+{% extends "::admin.html.twig" %}
+
+{% block pagetitle %}Message List{% endblock %}
+	
+{% block contentsinglecolumn %}
+	<br />				
+	
+	{% for flashMessage in app.session.flashbag.get('error') %}
+	    <div class="box box-success">
+	        {{ flashMessage }}
+	    </div>
+	{% endfor %}
+	
+	<div class="box box-info">Click Show to view details</div>
+	
+	<table class="display stylized" id="data-table">
+		<thead>
+			<tr>
+				<th>NAME</th>
+                <th>EMAIL</th>
+                <th>SUBJECT</th>
+                <th>DATE</th>
+                <th>ACTIONS</th>
+            </tr>
+		</thead>
+		<tbody>
+			{% for entity in entities %}
+	            <tr class="{{ cycle(['gradeX', 'gradeA'], loop.index0) }}"{% if entity.isread==0 %} style="font-weight:bold;"{% endif %}>
+	                <td><a href="{{ path('renz_admin_contact_show', { 'id': entity.id }) }}">{{ entity.name }}</a></td>
+	                <td>{{ entity.email }}</td>
+	                <td>{{ entity.subject }}</td>
+	                <td>{% if entity.createdAt %}{{ entity.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+	                <td><p><a href="{{ path('renz_admin_contact_show', { 'id': entity.id }) }}" class="btn">SHOW</a></p></td>
+	            </tr>
+	        {% endfor %}
+		</tbody>
+		<tfoot>
+			<tr>
+				<th>NAME</th>
+                <th>EMAIL</th>
+                <th>SUBJECT</th>
+                <th>DATE</th>
+                <th>ACTIONS</th>
+			</tr>
+		</tfoot>
+	</table>
+    
+{% endblock %}

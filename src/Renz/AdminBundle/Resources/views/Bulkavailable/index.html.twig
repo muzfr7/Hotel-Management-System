@@ -1,0 +1,84 @@
+{% extends "::admin.html.twig" %}
+
+{% block pagetitle %}Bulk Availability List{% endblock %}
+	
+{% block content %}
+	<br />				
+	
+	{% for flashMessage in app.session.flashbag.get('error') %}
+	    <div class="box box-success">
+	        {{ flashMessage }}
+	    </div>
+	{% endfor %}
+	
+	<div class="box box-info">Click Show to view details | Click edit to modify details</div>
+	
+	<table class="display stylized" id="data-table">
+		<thead>
+			<tr>
+                <th>ROOM</th>
+                <th>QUANTITY</th>
+                <th>FROM DATE</th>
+                <th>TO DATE</th>
+                <th>ACTIONS</th>
+            </tr>
+		</thead>
+		<tbody>
+			{% for entity in entities %}
+	            <tr class="{{ cycle(['gradeX', 'gradeA'], loop.index0) }}">
+	                <td><a href="{{ path('renz_admin_bulkavailable_show', { 'id': entity.id }) }}">{{ entity.room }}</a></td>
+	                <td>{{ entity.qty }}</td>
+	                <td>{% if entity.fromdate %}{{ entity.fromdate|date('Y-m-d') }}{% endif %}</td>
+	                <td>{% if entity.todate %}{{ entity.todate|date('Y-m-d') }}{% endif %}</td>
+	                <td align="center">
+		                <p>
+		                	<a href="{{ path('renz_admin_bulkavailable_show', { 'id': entity.id }) }}" class="btn">SHOW</a>
+		                    <a href="{{ path('renz_admin_bulkavailable_edit', { 'id': entity.id }) }}" class="btn">EDIT</a>
+		                </p>
+	                </td>
+	            </tr>
+	        {% endfor %}
+		</tbody>
+		<tfoot>
+			<tr>
+				<th>ROOM</th>
+				<th>QUANTITY</th>
+                <th>FROM DATE</th>
+                <th>TO DATE</th>
+                <th>ACTIONS</th>
+			</tr>
+		</tfoot>
+	</table>
+	
+{% endblock %}
+
+{% block sidenav %}
+	<!-- 
+	<p class="leading">
+		<a href="{{ path('renz_admin_roompolicy_new') }}" class="btn btn-special btn-green">
+			<img SRC="{{ asset('bundles/admin/img/add.png') }}" class="icon" alt=""/>
+			Add New Room Policy
+		</a>
+	</p>
+	-->
+	<p class="leading">
+		<a href="{{ path('renz_admin_bulkavailable_new') }}" class="btn btn-special btn-white">
+			<img SRC="{{ asset('bundles/admin/img/add.png') }}" class="icon" alt=""/>
+			Add New Availability
+		</a>
+	</p>
+	<div class="box">
+		You are now using <b class="big">72%</b> of your allowed storage capacity.
+		<div id="capacity" class="progress progress-green"><span><b></b></span></div>
+	</div>
+	<div class="content-box">
+		<header>
+			<h3>Tags</h3>
+		</header>
+		<section>
+			<div class="tagcloud">
+				<a href="#" class="tag1">lorem</a> <a href="#" class="tag5">ipsum</a> <a href="#" class="tag1">dolor</a> <a href="#" class="tag3">sit</a> <a href="#" class="tag1">amet</a>
+			</div>
+		</section>
+	</div>
+{% endblock %}

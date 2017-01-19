@@ -1,0 +1,123 @@
+{% extends "::admin.html.twig" %}
+
+{% block pagetitle %}?{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<!-- jQuery graph plugins -->
+	<!--[if IE]><script type="text/javascript" src="{{ asset('bundles/admin/js/flot/excanvas.min.js') }}"></script><![endif]-->
+	<script type="text/javascript" SRC="{{ asset('bundles/admin/js/flot/jquery.flot.min.js') }}"></script>
+{% endblock %}
+
+{% block javascriptcode %}
+	{{ parent() }}
+	<script type="text/javascript">
+	$(document).ready(function(){
+		
+		/* setup navigation, content boxes, etc... */
+		Administry.setup();
+		
+		/* progress bar animations - setting initial values */
+		Administry.progress("#progress1", 1, 5);
+		Administry.progress("#progress2", 2, 5);
+		Administry.progress("#progress3", 2, 5);
+	
+		/* flot graphs */
+		var sales = [{
+			label: 'Total Paid',
+			data: [[1, 0],[2,0],[3,0],[4,0],[5,0],[6,0],[7,900],[8,0],[9,0],[10,0],[11,0],[12,0]]
+		},{
+			label: 'Total Due',
+			data: [[1, 0],[2,0],[3,0],[4,0],[5,0],[6,422.10],[7,0],[8,0],[9,0],[10,0],[11,0],[12,0]]
+		}
+		];
+	
+		var plot = $.plot($("#placeholder"), sales, {
+			bars: { show: true, lineWidth: 1 },
+			legend: { position: "nw" },
+			xaxis: { ticks: [[1, "Jan"], [2, "Feb"], [3, "Mar"], [4, "Apr"], [5, "May"], [6, "Jun"], [7, "Jul"], [8, "Aug"], [9, "Sep"], [10, "Oct"], [11, "Nov"], [12, "Dec"]] },
+			yaxis: { min: 0, max: 1000 },
+			grid: { color: "#666" },
+			colors: ["#0a0", "#f00"]
+	    });
+	});
+	</script>
+{% endblock %}
+
+{% block contentsinglecolumn %}
+	
+	<div class="colgroup leading">
+		<div class="column width3 first">
+			<h3>Welcome back, <a href="#">{{ app.user.username|capitalize }}</a></h3>
+			<p>
+				You are currently signed as <b>Super User</b>.<br />
+				<a href="{{ path('renz_admin_user_edit', { 'id': app.user.id }) }}">Change Password?</a>
+			</p>
+		</div>
+		<div class="column width3">
+			<h4>Last login</h4>
+			<p>
+				Sundy August, 12th, 2014 at 11:32PM from 127.0.0.1<br />
+				No error login attempts.
+			</p>
+		</div>
+	</div>
+	
+	<div>
+		<div class="first">
+			
+			<hr/>
+			<h4>Pending Bookings / New Bookings</h4>
+			<hr/>
+			
+			<table class="display stylized" id="data-table">
+				<thead>
+					<tr>
+		                <th>NAME</th>
+		                <th>ROOM</th>
+		                <th>DATE</th>
+		                <th>CUSTOMER</th>
+		                <th>STATUS</th>
+		                <th>ACTIONS</th>
+		            </tr>
+				</thead>
+				<tbody>
+					{% for entity in entities %}
+			            <tr class="{{ cycle(['gradeX', 'gradeA'], loop.index0) }}">
+			                <td><a href="{{ path('renz_admin_booking_show', { 'id': entity.id }) }}">{{ entity.firstname }} {{ entity.lastname }}</a></td>
+			                <td>{{ entity.room }}</td>
+			                <td>{% if entity.updatedAt %}{{ entity.updatedAt|date('jS, F Y - H:i:s') }}{% endif %}</td>
+			                <td class="center">
+			                	{% if entity.bookingstatuscustomer=="Cancel" %}
+			                		<font color="red">{{ entity.bookingstatuscustomer }}led</font>
+			                	{% else %}
+			                		{{ entity.bookingstatuscustomer }}
+			                	{% endif %}
+			                </td>
+			                <td class="center">{{ entity.bookingstatus }}</td>
+			                <td align="center">
+				                <p>
+				                	<a href="{{ path('renz_admin_booking_show', { 'id': entity.id }) }}" class="btn">SHOW</a>
+				                    <a href="{{ path('renz_admin_booking_edit', { 'id': entity.id }) }}" class="btn">EDIT</a>
+				                </p>
+			                </td>
+			            </tr>
+			        {% endfor %}
+				</tbody>
+				<tfoot>
+					<tr>
+						<th>NAME</th>
+		                <th>ROOM</th>
+		                <th>DATE</th>
+		                <th>CUSTOMER</th>
+		                <th>STATUS</th>
+		                <th>ACTIONS</th>
+					</tr>
+				</tfoot>
+			</table>
+			
+		</div>
+	</div>
+	<div class="clear">&nbsp;</div>
+	
+{% endblock %}

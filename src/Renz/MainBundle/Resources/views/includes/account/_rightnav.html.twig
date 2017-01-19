@@ -1,0 +1,45 @@
+	<!-- right nav -->
+    <section id="reservation-form" class="mt50 clearfix">
+      <div class="col-sm-12 col-md-4">
+        
+        <form class="reservation-vertical clearfix" role="form" method="post" id="bookingform">
+          <h2 class="lined-heading"><span>Main Menu</span></h2>
+          
+          <a href="{{ path('renz_main_account_index') }}">
+	          <div class="price">
+	            <h4>Your Account</h4><br />
+	            <span>Your Account Dashboard displays alerts and any status updates</span><br />
+	          </div>
+          </a>
+          
+          <a href="{{ path('renz_main_account_reservations') }}">
+	          <div class="price">
+	            <h4>Your Reservations</h4><br />
+	            <span>View/Edit Your Reservations/Booking History</span><br />
+	          </div>
+          </a>
+          
+          <a href="{{ path('renz_main_account_profile') }}">
+	          <div class="price">
+	            <h4>Your Profile</h4><br />
+	            <span>View/Edit Your Profile Details - e-g: basic info, address</span><br />
+	          </div>
+          </a>
+          
+          <a href="{{ path('renz_main_account_changepassword') }}">
+	          <div class="price">
+	            <h4>Change Password</h4><br />
+	            <span>Click Here to change your password</span><br />
+	          </div>
+          </a>
+          
+          <a href="{{ path('renz_main_security_logout') }}">
+	          <div class="price">
+	            <h4>Logout</h4><br />
+	            <span>Click Here to Sign Out from your account.</span><br />
+	          </div>
+          </a>
+          
+        </form>
+      </div>
+    </section>

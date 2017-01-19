@@ -1,0 +1,178 @@
+{% extends '::base.html.twig' %}
+
+{% block content %}
+
+<style>
+.error{color:red;}
+</style>
+
+<script>
+$(function (){
+	$('#bookingform').validate({
+		rules: {
+			'checkin': {
+			   required: true,
+			},
+			'checkout': {
+			    required: true,
+			},
+			'guests': {
+			    required: true,
+			},
+		}
+	});
+});
+</script>
+
+<!-- Parallax Effect -->
+<script type="text/javascript">$(document).ready(function(){$('#parallax-pagetitle').parallax("50%", -0.55);});</script>
+
+<section class="parallax-effect">
+  <div id="parallax-pagetitle" style="background-image: url({{ asset('bundles/main/images/parallax/parallax-01.jpg') }});">
+    <div class="color-overlay"> 
+      <!-- Page title -->
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12">
+            <ol class="breadcrumb">
+              <li><a href="{{ path('renz_main_index_index') }}">{{ 'site.topnav.home' | trans }}</a></li>
+              <li><a href="{{ path('renz_main_room_index') }}">{{ 'site.label.roomList' | trans }}</a></li>
+              <li class="active">{{ 'site.label.roomDetail' | trans }}</li>
+            </ol>
+            <h1>{% if app.request.locale=='ar' %}{{ entity.titlear }}{% else %}{{ entity.title }}{% endif %}</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{#- 
+{% for closure in entity.roomclosure %}
+	{% for room in closure.room %}
+	{{ room.title }} | 
+	{% endfor %}
+	<br />
+	{{ closure.closefrom|date('Y-m-d') }}
+	<br />
+	{{ closure.closeto|date('Y-m-d') }}
+	<hr />
+{% endfor %}
+-#}
+
+<div class="container">
+  <div class="row"> 
+    
+    <!-- Slider -->
+    <section class="room-slider standard-slider mt50">
+      <div class="col-sm-12 col-md-8">
+        <div id="owl-standard" class="owl-carousel">
+        	{% for photos in entity.photos %}
+          	<div class="item"> <a href="{{ asset('uploads/rooms/'~photos.path) }}" data-rel="prettyPhoto[gallery1]"><img src="{{ asset('uploads/rooms/'~photos.path) }}" alt="{{ photos.title }}" class="img-responsive"></a> </div>
+          	{% endfor %}
+        </div>
+      </div>
+    </section>
+    
+    <!-- Reservation form -->
+    <section id="reservation-form" class="mt50 clearfix">
+      <div class="col-sm-12 col-md-4">
+        
+        <form class="reservation-vertical clearfix" role="form" method="get" action="{{ path('renz_main_room_checkifavailable') }}" id="bookingform">
+          <h2 class="lined-heading"><span>{{ 'site.label.reservation' | trans }}</span></h2>
+          <div class="price">
+            <h4>{% if app.request.locale=='ar' %}{{ entity.titlear }}{% else %}{{ entity.title }}{% endif %}</h4><br />
+            {{ 'site.label.sar' | trans }} {{ entity.price }} - <span> {{ 'site.label.night' | trans }} | {{ 'site.label.includeBreakFast' | trans }}</span><br />
+          </div>
+          	
+	          <div class="form-group">
+	            <label for="checkin">{{ 'site.label.checkin' | trans }}</label>
+	            <div class="popover-icon" data-container="body" data-toggle="popover" data-trigger="hover" data-placement="right" data-content="Please specify checkin date"> <i class="fa fa-info-circle fa-lg"> </i> </div>
+	            <i class="fa fa-calendar infield"></i>
+	            <input name="checkin" type="text" id="checkin" class="form-control" placeholder="{{ 'site.label.checkin' | trans }}"/>
+	          </div>
+	          <div class="form-group">
+	            <label for="checkout">{{ 'site.label.checkout' | trans }}</label>
+	            <div class="popover-icon" data-container="body" data-toggle="popover" data-trigger="hover" data-placement="right" data-content="Please specify checkout date"> <i class="fa fa-info-circle fa-lg"> </i> </div>
+	            <i class="fa fa-calendar infield"></i>
+	            <input name="checkout" type="text" id="checkout" class="form-control" placeholder="{{ 'site.label.checkout' | trans }}"/>
+	          </div>
+	          <div class="form-group">
+	            <div class="guests-select">
+	              <label>{{ 'site.label.guests' | trans }}</label>
+	              <div class="form-group adults">
+	                  <select name="guests" id="guests" class="form-control">
+	                    {% for i in 1..entity.capacity %}
+	                    <option value="{{ i }}">{{ i }}</option>
+	                    {% endfor %}
+	                  </select>
+                  </div>
+	            </div>
+	          </div>
+	          <input type="hidden" name="roomid" value="{{ entity.id }}" />
+	          <button type="submit" class="btn btn-primary btn-block">{{ 'site.button.bookNow' | trans }}</button>
+          
+        </form>
+      </div>
+    </section>
+    
+    <section class="mt50 clearfix">
+      <div class="col-sm-12">
+		{% if app.request.locale=='ar' %}{{ entity.longDetailar|raw }}{% else %}{{ entity.longDetail|raw }}{% endif %}
+      	<div style="clear:both;"></div>
+      </div>
+   	</section>
+    
+    <!-- Room Content -->
+    <section>
+      <div class="container">
+        <div class="row">
+          <h2 class="lined-heading" style="margin-top:50px; margin-bottom:-65px;"><span>{{ 'site.label.moreDetail' | trans }}</span></h2>
+          <div class="col-sm-7 mt50">
+            <h3 class="mt50">{{ 'site.label.facilitiesAtRenzHotel' | trans }}</h3>
+            <table class="table table-striped mt30">
+              <tbody>
+              	{% for facility in hotelfacilities %}
+                <tr>
+                	<td><i class="fa fa-check-circle"></i> <b>
+                		{% if app.request.locale=='ar' %}
+                			{{ facility.titlear }}</b> - {{ facility.detailar|raw }}
+                		{% else %}
+                			{{ facility.title }}</b> - {{ facility.detail|raw }}
+                		{% endif %}
+                	</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          <div class="col-sm-5 mt50">
+            <h3 class="mt50">{{ 'site.label.policiesOfRenzHotel' | trans }}</h3>
+            <table class="table table-striped mt30">
+              <tbody>
+              	{% for policy in hotelpolicies %}
+                <tr>
+                	<td><i class="fa fa-check-circle"></i> <b>
+                		{% if app.request.locale=='ar' %}
+                			{{ policy.titlear }}</b> - {{ policy.detailar|raw }}
+                		{% else %}
+                			{{ policy.title }}</b> - {{ policy.detail|raw }}
+                		{% endif %}
+                	</td>
+                </tr>
+                {% endfor %}
+                <tr><td><i class="fa fa-check-circle"></i> <b>{{ 'site.label.cardAcceptedAtRenzHotel' | trans }}</b> <br /><img src="{{ asset('bundles/main/images/cards.jpg') }}" /><br />{{ 'site.label.preAuthorizeCard' | trans }}</td></tr>
+              </tbody>
+            </table>
+            
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Rooms -->
+	{{ include('MainBundle:includes:homepage/_guestrooms.html.twig') }}
+    
+  </div>
+</div>
+{% endblock %}

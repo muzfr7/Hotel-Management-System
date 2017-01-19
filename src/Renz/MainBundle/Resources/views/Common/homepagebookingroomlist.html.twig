@@ -1,0 +1,3 @@
+{% for room in rooms %}
+	<option value="{{ room.id }}">{% if app.request.locale=='ar' %}{{ room.titlear }}{% else %}{{ room.title }}{% endif %}</option>
+{% endfor %}

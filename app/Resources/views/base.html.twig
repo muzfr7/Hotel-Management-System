@@ -1,0 +1,240 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>{{ 'site.title' | trans }}</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
+
+	<!-- Stylesheets -->
+	{% block stylesheets %}
+    	<link href="{{ asset('bundles/main/css/animate.css') }}" rel="stylesheet" />
+    	<link href="{{ asset('bundles/main/css/bootstrap.css') }}" rel="stylesheet" />
+    	<link href="{{ asset('bundles/main/css/owl.carousel.css') }}" rel="stylesheet" />
+    	<link href="{{ asset('bundles/main/css/font-awesome.min.css') }}" rel="stylesheet" />
+    	<link href="{{ asset('bundles/main/css/owl.theme.css') }}" rel="stylesheet" />
+    	<link href="{{ asset('bundles/main/css/prettyPhoto.css') }}" rel="stylesheet" />
+    	<link href="{{ asset('bundles/main/css/smoothness/jquery-ui-1.10.4.custom.min.css') }}" rel="stylesheet" />
+    	<link href="{{ asset('bundles/main/rs-plugin/css/settings.css') }}" rel="stylesheet" />
+    	<link href="{{ asset('bundles/main/css/theme.css') }}" rel="stylesheet" />
+    	<link href="{{ asset('bundles/main/css/colors/turquoise.css') }}" rel="stylesheet" />
+    	<link href="{{ asset('bundles/main/css/responsive.css') }}" rel="stylesheet" />
+    	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600,700" />
+    {% endblock %}
+    {% if app.request.locale=='ar' %}
+		<link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/droidarabickufi.css" />
+	{% endif %}
+	<style type="text/css">
+		* {
+			{% if app.request.locale=='ar' %}
+				font-family: 'Droid Arabic Kufi', sans-serif;
+				direction: rtl;
+			{% endif %}
+		}
+	</style>
+    <script src="{{ asset('bundles/main/js/jquery-1.11.0.min.js') }}"></script>
+</head>
+
+<body class="pattern-1">
+	
+	<div class="boxed">
+		
+		<!-- Top header -->
+		<div id="top-header">
+		  <div class="container">
+		    <div class="row">
+		      <div class="col-xs-6">
+		        <div class="th-text pull-left">
+		          <div class="th-item"> <a href="#"><i class="fa fa-phone"></i> (00966)-126-7251-11</a> </div>
+		          <div class="th-item"> <a href="mailto:info@renz.com.sa"><i class="fa fa-envelope"></i> iNFO@RENZ.COM.SA </a></div>
+		        </div>
+		      </div>
+		      <div class="col-xs-6">
+		        <div class="th-text pull-right">
+		          <div class="th-item">
+		            <div class="btn-group"> 
+		            	{% if app.user %}
+		            		WELCOME, {{ app.user.firstname|upper }} &nbsp;&nbsp;|&nbsp;&nbsp; <a href="{{ path('renz_main_security_login') }}">	YOUR ACCOUNT</a> &nbsp;&nbsp;|&nbsp;&nbsp; <a href="{{ path('renz_main_security_logout') }}">LOGOUT</a>
+		            	{% else %}
+							<a href="{{ path('renz_main_security_login') }}">{{ 'site.topheader.login' | trans }}</a> &nbsp;&nbsp;|&nbsp;&nbsp; <a href="{{ path('renz_main_security_register') }}">{{ 'site.topheader.register' | trans }}</a>
+						{% endif %}
+					</div>
+		          </div>
+		          
+		          <div class="th-item">
+		            
+		            <div class="btn-group">
+		              <button class="btn btn-default btn-xs dropdown-toggle js-activated" type="button" data-toggle="dropdown"> 
+		              	{% if app.request.locale=='ar' %}AR{% endif %}
+		              	{% if app.request.locale=='en' %}EN{% endif %} <span class="caret"></span> 
+		              </button>
+		              <ul class="dropdown-menu">
+						<li> <a href="{% if app.request.get('_route_params') %}{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale': 'ar'})) }}{% endif %}">AR</a> </li>
+		                <li> <a href="{% if app.request.get('_route_params') %}{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale': 'en'})) }}{% endif %}">EN</a> </li>
+		              </ul>
+		            </div>
+		            
+		          </div>
+		          
+		          <div class="th-item">
+		            <div class="social-icons"> 
+						<a href="http://www.facebook.com/renzhotel"><i class="fa fa-facebook"></i></a> 
+						<a href="http://www.twitter.com/renzhotel"><i class="fa fa-twitter"></i></a> 
+						<a href="http://www.youtube.com/renzhotel"><i class="fa fa-youtube-play"></i></a> 
+					</div>
+		          </div>
+		        </div>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		
+		<!-- Header -->
+		<header>
+		  <!-- Navigation -->
+		  <div class="navbar yamm navbar-default" id="sticky">
+		    <div class="container">
+		      
+		      <div class="navbar-header">
+		        <button type="button" data-toggle="collapse" data-target="#navbar-collapse-grid" class="navbar-toggle"> 
+					<span class="icon-bar"></span> 
+					<span class="icon-bar"></span> 
+					<span class="icon-bar"></span> 
+				</button>
+		        <a href="{{ path('renz_main_index_index') }}" class="navbar-brand">         
+					<!-- Logo -->
+					<div id="logo"> 
+						<!--
+						<img id="default-logo" src="images/logo.png" alt="Renz Hotel" style="height:44px;"> 
+						<img id="retina-logo" src="images/logo-retina.png" alt="Renz Hotel" style="height:44px;"> 
+						-->
+						<img id="default-logo" src="{{ asset('bundles/main/images/logo.png') }}" alt="Renz Hotel" style=""> 
+					</div>
+		        </a> 
+			  </div>
+			  
+		      <div id="navbar-collapse-grid" class="navbar-collapse collapse">
+		        <ul class="nav navbar-nav">
+		          
+				  <li {% if app.request.get('_route') == 'renz_main_index_index' %}class="active"{% endif %}> <a href="{{ path('renz_main_index_index') }}">{{ 'site.topnav.home' | trans }}</a></li>
+				  
+				  <li {% if app.request.get('_route') == 'renz_main_page_about' %}class="active"{% endif %}> <a href="{{ path('renz_main_page_about') }}">{{ 'site.topnav.aboutus' | trans }}</a></li>
+				  
+				  <li {% if app.request.get('_route') == 'renz_main_page_facilities' %}class="active"{% endif %}> <a href="{{ path('renz_main_page_facilities') }}">{{ 'site.topnav.facilities' | trans }}</a></li>
+				  
+				  <li class="dropdown"> <a href="{{ path('renz_main_room_index') }}" data-toggle="dropdown" class="dropdown-toggle js-activated">{{ 'site.topnav.rooms' | trans }}<b class="caret"></b></a>
+		            {{ render(controller('MainBundle:Common:topnavroomlist')) }}
+		          </li>
+				  
+		          <li {% if app.request.get('_route') == 'renz_main_page_news' %}class="active"{% endif %}> <a href="{{ path('renz_main_page_news') }}">{{ 'site.topnav.news' | trans }}</a></li>
+		          
+				  <li {% if app.request.get('_route') == 'renz_main_page_gallery' %}class="active"{% endif %}> <a href="{{ path('renz_main_page_gallery') }}">{{ 'site.topnav.gallery' | trans }}</a></li>
+		          
+				  <li {% if app.request.get('_route') == 'renz_main_page_contact' %}class="active"{% endif %}class="dropdown"> <a href="{{ path('renz_main_page_contact') }}">{{ 'site.topnav.contact' | trans }}</a></li>
+				  
+		        </ul>
+		      </div>
+		      
+		    </div>
+		  </div>
+		</header>
+		
+		
+    	{% block content %}{% endblock %}
+		
+		
+		<!-- Call To Action -->
+		<section id="call-to-action" class="mt100">
+		  <div class="container">
+		    <div class="row">
+		      <div class="col-md-8 col-sm-8 col-xs-12">
+		        <h2>{{ 'site.label.whenWouldYouLikeToStay' | trans }}</h2>
+		      </div>
+		      <div class="col-md-4 col-sm-4 col-xs-12">
+		        <a href="{{ path('renz_main_room_index') }}" class="btn btn-default btn-lg pull-right">{{ 'site.button.bookNow' | trans }}</a>
+		      </div>
+		    </div>
+		  </div>
+		</section>
+		
+		<!-- Footer -->
+		<footer>
+			<div class="container">
+			  <div class="row">
+			    <div class="col-md-3 col-sm-3">
+			      <h4>{{ 'site.label.aboutRenzHotel' | trans }}</h4>
+			      <p>{{ render(controller('MainBundle:Common:aboutusmax400')) }}</p>
+			    </div>
+			    <div class="col-md-3 col-sm-3">
+			      <h4>{{ 'site.label.receiveOurNewsLetter' | trans }}</h4>
+			      <p>{{ 'site.label.newsletterSubscriptionLabel' | trans }}</p>
+			      <form role="form" action="{{ path('renz_main_page_newsletter') }}" method="post">
+			        <div class="form-group">
+			          <input name="newsletter-email" type="email" id="newsletter-email" required="required" class="form-control" placeholder="{{ 'site.label.enterYourEmailAddress' | trans }}">
+			        </div>
+			        <button type="submit" class="btn btn-lg btn-black btn-block">{{ 'site.button.submit' | trans }}</button>
+			      </form>
+			    </div>
+			    <div class="col-md-3 col-sm-3">
+			      <h4>{{ 'site.label.fromOurNews' | trans }}</h4>
+			      {{ render(controller('MainBundle:Common:last3news')) }}
+			    </div>
+			    <div class="col-md-3 col-sm-3">
+			      <h4>{{ 'site.label.address' | trans }}</h4>
+			      <address>
+				      {{ render(controller('MainBundle:Common:address')) }}
+			      </address>
+			    </div>
+			  </div>
+			</div>
+			<div class="footer-bottom">
+			<div class="container">
+			<div class="row">
+			<div class="col-xs-6"> &copy; {{ "now"|date('Y') }} Renz Hotel All Rights Reserved | Website Designed & Developed by <b><a href="mailto:kimmuzafars@gmail.com">iSDPro</a></b></div>
+			<div class="col-xs-6 text-right">
+			<ul>
+			<li><a href="{{ path('renz_main_page_contact') }}">{{ 'site.button.contact' | trans }}</a></li>
+			</ul>
+			</div>
+			</div>
+			</div>
+			</div>
+		</footer>
+		
+		<!-- Go-top Button -->
+		<div id="go-top"><i class="fa fa-angle-up fa-2x"></i></div>
+		
+	</div>
+	
+	{% block javascripts %}
+    	<!-- Javascripts -->
+		<script src="{{ asset('bundles/main/js/bootstrap.min.js') }}"></script>
+		<script src="{{ asset('bundles/main/js/bootstrap-hover-dropdown.min.js') }}"></script>
+		<script src="{{ asset('bundles/main/js/owl.carousel.min.js') }}"></script>
+		<script src="{{ asset('bundles/main/js/jquery.parallax-1.1.3.js') }}"></script>
+		<script src="{{ asset('bundles/main/js/jquery.nicescroll.js') }}"></script>
+		<script src="{{ asset('bundles/main/js/jquery.prettyPhoto.js') }}"></script>
+		<script src="{{ asset('bundles/main/js/jquery-ui-1.10.4.custom.min.js') }}"></script>
+		<script src="{{ asset('bundles/main/js/jquery.jigowatt.js') }}"></script>
+		<script src="{{ asset('bundles/main/js/jquery.sticky.js') }}"></script>
+		<script src="{{ asset('bundles/main/js/waypoints.min.js') }}"></script>
+		<script src="{{ asset('bundles/main/js/jquery.isotope.min.js') }}"></script>
+		<script src="{{ asset('bundles/main/js/jquery.gmap.min.js') }}"></script>
+		<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+		<script src="{{ asset('bundles/main/rs-plugin/js/jquery.themepunch.plugins.min.js') }}"></script>
+		<script src="{{ asset('bundles/main/rs-plugin/js/jquery.themepunch.revolution.min.js') }}"></script>
+		<!-- <script src="{{ asset('bundles/main/js/switch.js') }}"></script> -->
+		<script src="{{ asset('bundles/main/libs/jqueryvalidate/jquery.validate.min.js') }}"></script>
+		<script src="{{ asset('bundles/main/libs/jqueryvalidate/additional-methods.js') }}"></script>
+		<script src="{{ asset('bundles/main/js/custom.js') }}"></script>
+		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+			<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+			<script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+		<![endif]-->
+    {% endblock %}
+	
+</body>
+
+</html>

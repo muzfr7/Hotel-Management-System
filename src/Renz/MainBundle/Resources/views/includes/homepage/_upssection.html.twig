@@ -1,0 +1,21 @@
+<section class="usp mt100">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <h2 class="lined-heading"><span>{{ 'site.label.facilitiesAtRenzHotel' | trans }}</span></h2>
+      </div>
+      
+      {% for homepagefacility in homepagefacilities %}
+	      <div class="col-sm-3 bounceIn appear" data-start="0">
+	      	<div class="box-icon">
+		        <div class="circle"><i class="fa fa-th-large fa-lg"></i></div>
+		        <h3>{% if app.request.locale=='ar' %}{{ homepagefacility.titlear }}{% else %}{{ homepagefacility.title }}{% endif %}</h3>
+		        <p>{% if app.request.locale=='ar' %}{{ homepagefacility.shortDetailar|raw }}{% else %}{{ homepagefacility.shortDetail|raw }}{% endif %}</p>
+		        <a href="{{ path('renz_main_page_facilities') }}">{{ 'site.label.readmore' | trans }}<i class="fa fa-angle-right"></i></a> 
+		      </div>
+	      </div>
+      {% endfor %}
+      
+    </div>
+  </div>
+</section>

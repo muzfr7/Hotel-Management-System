@@ -1,0 +1,106 @@
+{% extends "::admin.html.twig" %}
+
+{% block pagetitle %}Room List{% endblock %}
+	
+{% block content %}
+	<br />				
+	
+	{% for flashMessage in app.session.flashbag.get('error') %}
+	    <div class="box box-success">
+	        {{ flashMessage }}
+	    </div>
+	{% endfor %}
+	
+	<div class="box box-info">Click <b>Show</b> to view details | Click <b>edit</b> to modify details</div>
+	
+	<table class="display stylized" id="data-table">
+		<thead>
+			<tr>
+				<th>PHOTO</th>
+                <th>TITLE</th>
+                <th>PRICE 1</th>
+                <th>PRICE 2</th>
+                <th>ORDER</th>
+                <th>STATUS</th>
+                <th>ACTIONS</th>
+            </tr>
+		</thead>
+		<tbody>
+			{% for entity in entities %}
+	            <tr class="{{ cycle(['gradeX', 'gradeA'], loop.index0) }}">
+	            	<td>
+	                	<a href="{{ asset('uploads/rooms_main/'~entity.path) }}" target="_blank">
+	                		<img src="{{ asset('uploads/rooms_main/'~entity.path) }}" title="{{ entity.title }}" width="70px" />
+	                	</a>
+	                </td>
+	                <td><a href="{{ path('renz_admin_room_show', { 'id': entity.id }) }}">{{ entity.title }}</a></td>
+	                <td class="center">SAR {{ entity.price }}</td>
+	                <td class="center">SAR {{ entity.nonRefundablePrice }}</td>
+	                <td class="center">{{ entity.roomOrder }}</td>
+	                <td class="center">
+	                	{% if entity.status==1 %}
+	                		<font color="green">Published</font>
+	                	{% else %}
+	                		<font color="red">Disabled</font>
+	                	{% endif %}
+	                </td>
+	                <td>
+		                <p>
+		                	<a href="{{ path('renz_admin_room_show', { 'id': entity.id }) }}" class="btn">SHOW</a>
+		                    <a href="{{ path('renz_admin_room_edit', { 'id': entity.id }) }}" class="btn">EDIT</a>
+		                </p>
+	                </td>
+	            </tr>
+	        {% endfor %}
+		</tbody>
+		<tfoot>
+			<tr>
+				<th>PHOTO</th>
+				<th>TITLE</th>
+                <th>PRICE 1</th>
+                <th>PRICE 2</th>
+                <th>ORDER</th>
+                <th>STATUS</th>
+                <th>ACTIONS</th>
+			</tr>
+		</tfoot>
+	</table>
+    
+{% endblock %}
+
+{% block sidenav %}
+	<p class="leading">
+		<a href="{{ path('renz_admin_room_new') }}" class="btn btn-special btn-green">
+			<img SRC="{{ asset('bundles/admin/img/add.png') }}" class="icon" alt=""/>
+			1. Add New Room
+		</a>
+	</p>
+	<p class="leading">
+		<a href="{{ path('renz_admin_photo_index') }}" class="btn btn-special btn-blue">
+			<img SRC="{{ asset('bundles/admin/img/add.png') }}" class="icon" alt=""/>
+			2. Room Photos
+		</a>
+	</p>
+	<!-- 
+	<p class="leading">
+		<a href="{{ path('renz_admin_condit_index') }}" class="btn btn-special btn-blue" style="background-color:yellow !important; color:#333333 !important;">
+			<img SRC="{{ asset('bundles/admin/img/add.png') }}" class="icon" alt=""/>
+			3. Terms & Conditions
+		</a>
+	</p>
+	-->
+	<div class="box">
+		You are now using <b class="big">72%</b> of your allowed storage capacity.
+		<div id="capacity" class="progress progress-green"><span><b></b></span></div>
+	</div>
+	<div class="content-box">
+		<header>
+			<h3>Tags</h3>
+		</header>
+		<section>
+			<div class="tagcloud">
+				<a href="#" class="tag1">lorem</a> <a href="#" class="tag5">ipsum</a> <a href="#" class="tag1">dolor</a> <a href="#" class="tag3">sit</a> <a href="#" class="tag1">amet</a>
+			</div>
+		</section>
+	</div>
+{% endblock %}

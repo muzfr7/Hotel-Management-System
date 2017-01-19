@@ -1,0 +1,5 @@
+{% if app.request.locale=='ar' %}
+	{{ entity.longDetailar|length > 400 ? entity.longDetailar|striptags|slice(0, 400) ~ '...' : entity.longDetailar|striptags  }}
+{% else %}
+	{{ entity.longDetail|length > 400 ? entity.longDetail|striptags|slice(0, 400) ~ '...' : entity.longDetail|striptags  }}
+{% endif %}

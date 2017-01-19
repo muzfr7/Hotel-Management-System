@@ -1,0 +1,89 @@
+{% extends "::admin.html.twig" %}
+
+{% block pagetitle %}Testimonial List{% endblock %}
+	
+{% block javascriptcode %}
+	<script type="text/javascript">
+	$(document).ready(function(){
+		
+		/* setup navigation, content boxes, etc... */
+		Administry.setup();
+	
+	});
+	</script>
+{% endblock %}
+
+{% block contentsinglecolumn %}
+
+{{ form_start(edit_form) }}
+
+	<!-- Left column/section -->
+	<section class="column width6 first">
+	
+	<h3>Update Testimonial</h3>
+	
+		<fieldset>
+			<legend>Fill in details and press save..</legend>
+			
+			<p>
+				{{ form_label(edit_form.fullname) }}<br/>
+				{{ form_widget(edit_form.fullname) }}
+				<small>e.g. Muzafar, Saudi Arabia</small>
+			</p>
+			
+			<p>
+				{{ form_label(edit_form.comment) }}
+				<br/>
+				{{ form_widget(edit_form.comment) }}
+			</p>
+			
+			<p class="box" style="text-align: center;">IN ARABIC</p>
+			
+			<p>
+				{{ form_label(edit_form.fullnamear) }}<br/>
+				{{ form_widget(edit_form.fullnamear) }}
+				<small>e.g. Muzafar, Saudi Arabia</small>
+			</p>
+			
+			<p>
+				{{ form_label(edit_form.commentar) }}
+				<br/>
+				{{ form_widget(edit_form.commentar) }}
+			</p>
+			
+			<p class="box"><input type="submit" class="btn btn-green big" value="Save"/> or <a href="{{ path('renz_admin_testimonial_index') }}">Cancel</a></p>
+	
+		</fieldset>
+	
+	</section>
+	<!-- End of Left column/section -->
+	
+	<!-- Right column/section -->
+	<aside class="column width2">
+		
+		<p><a href="{{ path('renz_admin_testimonial_index') }}" class="btn btn-special"><img SRC="{{ asset('bundles/admin/img/page_white_go.png') }}" class="icon" alt=""/>Cancel and go back</a></p>
+		
+		<div class="content-box">
+			<header>
+				<h3>Testimonial Visibility</h3>
+			</header>
+			<section>
+				Choose whether or not you want this Room to be publicly visible.
+				<p>{{ form_widget(edit_form.status) }}</p>
+			</section>
+		</div>
+		 
+		<div id="rightmenu">
+			<dl class="first">
+				<dt><img width="16" height="16" alt="" SRC="img/help.png"></dt>
+				<dd><a href="#">Help</a></dd>
+				<dd class="last">If you are a new user, you should read "Getting started"</dd>							
+			</dl>
+		</div>
+		
+	</aside>
+	<!-- End of Right column/section -->
+
+{{ form_end(edit_form) }}
+
+{% endblock %}

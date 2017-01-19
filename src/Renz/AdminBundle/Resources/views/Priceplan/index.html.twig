@@ -1,0 +1,87 @@
+{% extends "::admin.html.twig" %}
+
+{% block pagetitle %}Price Plan List{% endblock %}
+	
+{% block contentsinglecolumn %}
+	<br />				
+	
+	{% for flashMessage in app.session.flashbag.get('error') %}
+	    <div class="box box-success">
+	        {{ flashMessage }}
+	    </div>
+	{% endfor %}
+	
+	<div class="box box-info">Click Show to view details | Click edit to modify details</div>
+	<div class="box box-info">Absense of <b>Price Plan</b> for any room will result in displaying <b>Standard Price</b>..</div>
+	
+	<table class="display stylized full" id="data-table">
+		<thead>
+			<tr>
+                <th>DATE RANGE</th>
+                <th>ROOM</th>
+                <th>SUN</th>
+                <th>MON</th>
+                <th>TUE</th>
+                <th>WED</th>
+                <th>THU</th>
+                <th>FRI</th>
+                <th>SAT</th>
+                <th>ACTIONS</th>
+            </tr>
+		</thead>
+		<tbody>
+			{% for entity in entities %}
+	            <tr class="{{ cycle(['gradeX', 'gradeA'], loop.index0) }}" style="">
+	            	<td>
+	            		{% if entity.dateStart %}{{ entity.dateStart|date('Y-m-d') }}{% endif %}
+	            		-<b>to</b>-
+	            		{% if entity.dateEnd %}{{ entity.dateEnd|date('Y-m-d') }}{% endif %}
+	            	</td>
+	                <td><span style="color:blue;">{{ entity.room }}</span></td>
+	                <td>SAR <b>{{ entity.sunday }}</b></td>
+	                <td>SAR <b>{{ entity.monday }}</b></td>
+	                <td>SAR <b>{{ entity.tuesday }}</b></td>
+	                <td>SAR <b>{{ entity.wednesday }}</b></td>
+	                <td>SAR <b>{{ entity.thursday }}</b></td>
+	                <td>SAR <b>{{ entity.friday }}</b></td>
+	                <td>SAR <b>{{ entity.saturday }}</b></td>
+	                <td>
+		                <p>
+		                	<a href="{{ path('renz_admin_priceplan_show', { 'id': entity.id }) }}" class="btn">SHOW</a>
+		                    <a href="{{ path('renz_admin_priceplan_edit', { 'id': entity.id }) }}" class="btn">EDIT</a>
+		                </p>
+	                </td>
+	            </tr>
+	        {% endfor %}
+		</tbody>
+		<tfoot>
+			<tr>
+				<th>DATE</th>
+				<th>ROOM</th>
+				<th>SUN</th>
+                <th>MON</th>
+                <th>TUE</th>
+                <th>WED</th>
+                <th>THU</th>
+                <th>FRI</th>
+                <th>SAT</th>
+                <th>ACTIONS</th>
+			</tr>
+		</tfoot>
+	</table>
+	
+	<div style="clear:both;"></div>
+	
+	<p class="leading" style="float:right;">
+		<a href="{{ path('renz_admin_priceplan_new') }}" class="btn btn-special btn-green">
+			<img SRC="{{ asset('bundles/admin/img/add.png') }}" class="icon" alt=""/>
+			Add New Price Plan
+		</a>
+	</p>
+	<p class="leading">
+		<a href="{{ path('renz_admin_room_index') }}" class="btn btn-special btn-white">
+			<img SRC="{{ asset('bundles/admin/img/add.png') }}" class="icon" alt=""/>
+			Back to Rooms
+		</a>
+	</p>
+{% endblock %}

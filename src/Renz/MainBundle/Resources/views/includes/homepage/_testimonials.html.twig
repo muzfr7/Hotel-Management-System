@@ -1,0 +1,23 @@
+<section class="testimonials mt100">
+  <div class="col-md-6">
+	<h2 class="lined-heading fadeIn appear" data-start="0"><span>{{ 'site.label.whatOurVisitorsExperienced' | trans }}</span></h2>
+	<div id="owl-reviews" class="owl-carousel">
+	  
+	  <div class="item">
+		{% for testi in testimonials %}
+		<div class="row">
+		  <div class="col-lg-3 col-md-4 col-sm-2 col-xs-12"> <img src="{{ asset('bundles/main/images/reviews/review-00.jpg') }}" alt="Review 1" class="img-circle" /></div>
+		  <div class="col-lg-9 col-md-8 col-sm-10 col-xs-12">
+		  	{% if app.request.locale=='ar' %}
+		  		<div class="text-balloon">{{ testi.commentar }} <span>{{ testi.fullnamear }}</span> </div>
+		  	{% else %}
+		  		<div class="text-balloon">{{ testi.comment }} <span>{{ testi.fullname }}</span> </div>
+		  	{% endif %}
+		  </div>
+		</div>
+		{% endfor %}
+	  </div>
+	  
+	</div>
+  </div>
+</section>

@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>Admin - Renz Hotel</title>
+	
+	<meta name="description" content="Admin - Renz Hotel" />
+	<meta name="keywords" content="Admin - Renz Hotel" />
+	<!-- We need to emulate IE7 only when we are to use excanvas -->
+	<!--[if IE]>
+	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+	<![endif]-->
+	
+	<!-- Favicons -->
+	<link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
+	<link rel="icon" href="{{ asset('favicon.ico') }}">
+	<link rel="apple-touch-icon" href="{{ asset('favicon.ico') }}">
+	
+	{% block stylesheets %}
+		<!-- Main Stylesheet --> 
+		<link rel="stylesheet" href="{{ asset('bundles/admin/css/style.css') }}" type="text/css" />
+		<!-- Colour Schemes
+		Default colour scheme is blue. Uncomment prefered stylesheet to use it.
+		<link rel="stylesheet" href="{{ asset('bundles/admin/css/brown.css') }}" type="text/css" media="screen" />  
+		<link rel="stylesheet" href="{{ asset('bundles/admin/css/gray.css') }}" type="text/css" media="screen" />  
+		<link rel="stylesheet" href="{{ asset('bundles/admin/css/green.css') }}" type="text/css" media="screen" />
+		<link rel="stylesheet" href="{{ asset('bundles/admin/css/pink.css') }}" type="text/css" media="screen" />  
+		<link rel="stylesheet" href="{{ asset('bundles/admin/css/red.css') }}" type="text/css" media="screen" />
+		-->
+		<!--[if IE]>
+		<link rel="stylesheet" type="text/css" media="all" href="{{ asset('bundles/admin/css/ie.css') }}"/>
+		<![endif]-->
+		<!-- Your Custom Stylesheet --> 
+		<link rel="stylesheet" href="{{ asset('bundles/admin/css/custom.css') }}" type="text/css" /> 
+	{% endblock %}
+	
+	{% block javascripts %}
+		<!--swfobject - needed only if you require <video> tag support for older browsers -->
+		<script type="text/javascript" SRC="{{ asset('bundles/admin/js/swfobject.js') }}"></script>
+		<!-- jQuery with plugins -->
+		<script type="text/javascript" SRC="{{ asset('bundles/admin/js/jquery-1.4.2.min.js') }}"></script>
+		<!-- Could be loaded remotely from Google CDN : <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script> -->
+		<script type="text/javascript" SRC="{{ asset('bundles/admin/js/jquery.ui.core.min.js') }}"></script>
+		<script type="text/javascript" SRC="{{ asset('bundles/admin/js/jquery.ui.widget.min.js') }}"></script>
+		<script type="text/javascript" SRC="{{ asset('bundles/admin/js/jquery.ui.tabs.min.js') }}"></script>
+		<!-- jQuery tooltips -->
+		<script type="text/javascript" SRC="{{ asset('bundles/admin/js/jquery.tipTip.min.js') }}"></script>
+		<!-- Superfish navigation -->
+		<script type="text/javascript" SRC="{{ asset('bundles/admin/js/jquery.superfish.min.js') }}"></script>
+		<script type="text/javascript" SRC="{{ asset('bundles/admin/js/jquery.supersubs.min.js') }}"></script>
+		<!-- jQuery popup box -->
+		<script type="text/javascript" SRC="{{ asset('bundles/admin/js/jquery.nyroModal.pack.js') }}"></script>
+		
+		<!-- jQuery tag input -->
+		<script type="text/javascript" SRC="{{ asset('bundles/admin/js/jquery.tagInput.min.js') }}"></script>
+		<!-- jQuery wysiwyg editor -->
+		<script type="text/javascript" SRC="{{ asset('bundles/admin/js/jquery.wysiwyg.min.js') }}"></script>
+		
+		<!-- Internet Explorer Fixes --> 
+		<!--[if IE]>
+		<script src="{{ asset('bundles/admin/js/html5.js') }}"></script>
+		<![endif]-->
+		<!--Upgrade MSIE5.5-7 to be compatible with MSIE8: http://ie7-js.googlecode.com/svn/version/2.1(beta3)/IE8.js -->
+		<!--[if lt IE 8]>
+		<script src="js/IE8.js"></script>
+		<![endif]-->
+		
+		<!-- Admin template javascript load -->
+		<script type="text/javascript" SRC="{{ asset('bundles/admin/js/administry.js') }}"></script>
+		
+		<!-- jQuery data tables -->
+		<script type="text/javascript" SRC="{{ asset('bundles/admin/js/jquery.dataTables.min.js') }}"></script>
+		
+		<script src="{{ asset('bundles/main/libs/jqueryvalidate/jquery.validate.min.js') }}"></script>
+		<script src="{{ asset('bundles/main/libs/jqueryvalidate/additional-methods.js') }}"></script>
+	{% endblock %}
+	
+	
+	{% block javascriptcode %}
+   		<script type="text/javascript">
+		$(document).ready(function(){
+			
+			/* setup navigation, content boxes, etc... */
+			Administry.setup();
+			
+			/* datatable */
+			$('#data-table').dataTable({
+		        /* Disable initial sort */
+		        "aaSorting": []
+		    });
+		});
+		</script>
+    {% endblock %}	
+</head>
+<body>
+	<!-- Header -->
+	<header id="top">
+		<div class="wrapper">
+			<!-- Title/Logo - can use text instead of image -->
+			<div id="title">
+				<a href="{{ path('renz_admin_default_index') }}">
+					<img SRC="{{ asset('bundles/main/images/logo.png') }}" alt="Renz Hotel" />
+				</a>
+			</div>
+			<!-- Top navigation -->
+			<div id="topnav">
+				<a href="#"><img class="avatar" SRC="{{ asset('bundles/admin/img/user_32.png') }}" alt="" /></a>
+				Logged in as <b>{{ app.user.username|capitalize }}</b>
+				<span>|</span> <a href="#">Settings</a>
+				<span>|</span> <a href="{{ path('renz_admin_security_logout') }}">Logout</a><br />
+				{{ render(controller('AdminBundle:Common:unreadmessagecounter')) }}
+			</div>
+			<!-- End of Top navigation -->
+			<!-- Main navigation -->
+			<nav id="menu">
+				<ul class="sf-menu">
+					<li{% if app.request.get('_route') == 'renz_admin_default_index' %} class="current"{% endif %}><a HREF="{{ path('renz_admin_default_index') }}">Dashboard</a></li>
+					
+					{% if is_granted('ROLE_ADMIN') %}
+						<li
+						{% if app.request.get('_route') == 'renz_admin_room_index' or app.request.get('_route') == 'renz_admin_room_new' or app.request.get('_route') == 'renz_admin_room_show' or app.request.get('_route') == 'renz_admin_room_edit' %} class="current"{% endif %}
+						{% if app.request.get('_route') == 'renz_admin_photo_index' or app.request.get('_route') == 'renz_admin_photo_new' or app.request.get('_route') == 'renz_admin_photo_show' or app.request.get('_route') == 'renz_admin_photo_edit' %} class="current"{% endif %}
+						>
+							<a HREF="{{ path('renz_admin_room_index') }}">Room Manager</a>
+							<ul>
+								<li><a href="{{ path('renz_admin_room_index') }}">Room List</a></li>
+								<li><a href="{{ path('renz_admin_bulkavailable_index') }}">Bulk Availability</a></li>
+								
+								<li><a href="{{ path('renz_admin_roompolicy_index') }}">Room Policies</a></li>
+								<li><a href="{{ path('renz_admin_roomclosure_index') }}">Room Closure</a></li>
+							</ul>
+						</li>
+						<!-- <li{% if app.request.get('_route') == 'renz_admin_roomclosure_index' or app.request.get('_route') == 'renz_admin_roomclosure_new' or app.request.get('_route') == 'renz_admin_roomclosure_show' or app.request.get('_route') == 'renz_admin_roomclosure_edit' %} class="current"{% endif %}><a HREF="{{ path('renz_admin_roomclosure_index') }}">Room Closure</a></li> -->
+						<!-- <li{% if app.request.get('_route') == 'renz_admin_condit_index' or app.request.get('_route') == 'renz_admin_condit_new' or app.request.get('_route') == 'renz_admin_condit_show' or app.request.get('_route') == 'renz_admin_condit_edit' %} class="current"{% endif %}><a HREF="{{ path('renz_admin_condit_index') }}">Terms</a></li> -->
+						<li{% if app.request.get('_route') == 'renz_admin_contact_index' or app.request.get('_route') == 'renz_admin_contact_new' or app.request.get('_route') == 'renz_admin_contact_show' or app.request.get('_route') == 'renz_admin_contact_edit' %} class="current"{% endif %}><a HREF="{{ path('renz_admin_contact_index') }}">Messages</a></li>
+					{% endif %}
+					
+					<li{% if app.request.get('_route') == 'renz_admin_booking_index' or app.request.get('_route') == 'renz_admin_booking_new' or app.request.get('_route') == 'renz_admin_booking_show' or app.request.get('_route') == 'renz_admin_booking_edit' %} class="current"{% endif %}><a HREF="{{ path('renz_admin_booking_index') }}">Bookings</a></li>
+					
+					{% if is_granted('ROLE_ADMIN') %}
+						<li{% if app.request.get('_route') == 'renz_admin_cms_index' or app.request.get('_route') == 'renz_admin_cms_new' or app.request.get('_route') == 'renz_admin_cms_show' or app.request.get('_route') == 'renz_admin_cms_edit' %} class="current"{% endif %}><a HREF="{{ path('renz_admin_cms_index') }}">CMS</a></li>
+						<li{% if app.request.get('_route') == 'renz_admin_news_index' or app.request.get('_route') == 'renz_admin_news_new' or app.request.get('_route') == 'renz_admin_news_show' or app.request.get('_route') == 'renz_admin_news_edit' %} class="current"{% endif %}><a HREF="{{ path('renz_admin_news_index') }}">News</a></li>
+						<li{% if app.request.get('_route') == 'renz_admin_newsletter_index' or app.request.get('_route') == 'renz_admin_newsletter_new' or app.request.get('_route') == 'renz_admin_newsletter_show' or app.request.get('_route') == 'renz_admin_newsletter_edit' %} class="current"{% endif %}><a HREF="{{ path('renz_admin_newsletter_index') }}">Newsletter</a></li>
+						<li
+						{% if app.request.get('_route') == 'renz_admin_album_index' or app.request.get('_route') == 'renz_admin_album_new' or app.request.get('_route') == 'renz_admin_album_show' or app.request.get('_route') == 'renz_admin_album_edit' %} class="current"{% endif %}
+						{% if app.request.get('_route') == 'renz_admin_albumphoto_index' or app.request.get('_route') == 'renz_admin_albumphoto_new' or app.request.get('_route') == 'renz_admin_albumphoto_show' or app.request.get('_route') == 'renz_admin_albumphoto_edit' %} class="current"{% endif %}
+						><a HREF="{{ path('renz_admin_album_index') }}">Gallery</a></li>
+						<li{% if app.request.get('_route') == 'renz_admin_slider_index' or app.request.get('_route') == 'renz_admin_slider_new' or app.request.get('_route') == 'renz_admin_slider_show' or app.request.get('_route') == 'renz_admin_slider_edit' %} class="current"{% endif %}><a HREF="{{ path('renz_admin_slider_index') }}">Slider</a></li>
+						<li{% if app.request.get('_route') == 'renz_admin_user_index' or app.request.get('_route') == 'renz_admin_user_new' or app.request.get('_route') == 'renz_admin_user_show' or app.request.get('_route') == 'renz_admin_user_edit' %} class="current"{% endif %}><a HREF="{{ path('renz_admin_user_index') }}">Users</a></li>
+						<li>
+							<a href="#">Hotel Manager</a>
+							<ul>
+								<li><a href="{{ path('renz_admin_hotelpolicy_index') }}">Policies</a></li>
+								<li><a href="{{ path('renz_admin_hotelfacility_index') }}">Facilities</a></li>
+								<li><a href="{{ path('renz_admin_testimonial_index') }}">Testimonials</a></li>
+								<li><a href="{{ path('renz_admin_homepagefacility_index') }}">Homepage Facilities</a></li>
+							</ul>
+						</li>
+					{% endif %}
+				</ul>
+			</nav>
+			<!-- End of Main navigation -->
+		</div>
+	</header>
+	<!-- End of Header -->
+	
+	<!-- Page title -->
+	<div id="pagetitle">
+		<div class="wrapper">
+			<h1>Dashboard &rarr; <span>{% block pagetitle %}{% endblock %}</span></h1>
+			<!-- Quick search box -->
+			<form action="" method="get"><input class="" type="text" id="q" name="q" /></form>
+		</div>
+	</div>
+	<!-- End of Page title -->
+	
+	<!-- Page content -->
+	<div id="page">
+		<!-- Wrapper -->
+		<div class="wrapper">
+			
+    		{% block contentsinglecolumn %}{% endblock %}
+			
+			<!-- Left column/section -->
+			<section class="column width6 first">
+				{% block content %}{% endblock %}
+			</section>
+			<!-- End of Left column/section -->
+			
+			<!-- Right column/section -->
+			<aside class="column width2">
+				{% block sidenav %}{% endblock %}
+			</aside>
+			<!-- End of Right column/section -->
+			
+		</div>
+		<!-- End of Wrapper -->
+		
+		<div style="clear:both;"><br /><br /></div>
+		
+	</div>
+	<!-- End of Page content -->
+	
+	<!-- Page footer -->
+	<footer id="bottom">
+		<div class="wrapper">
+			<nav>
+				<a href="{{ path('renz_admin_default_index') }}">Dashboard</a> &middot;
+				
+				{% if is_granted('ROLE_ADMIN') %}
+					<a href="{{ path('renz_admin_room_index') }}">Rooms</a> &middot;
+					<a href="{{ path('renz_admin_room_new') }}">Add New Room</a> &middot;
+					<a href="{{ path('renz_admin_photo_index') }}">Photos</a> &middot;
+					<a href="{{ path('renz_admin_roomclosure_index') }}">Room Closure</a> &middot;
+					<!-- <a href="{{ path('renz_admin_condit_index') }}">Terms</a> &middot; -->
+					<a href="{{ path('renz_admin_contact_index') }}">Messages</a> &middot;
+				{% endif %}
+				
+				<a href="{{ path('renz_admin_booking_index') }}">Bookings</a> &middot;
+				
+				{% if is_granted('ROLE_ADMIN') %}
+					<a href="{{ path('renz_admin_cms_index') }}">CMS</a> &middot;
+					<a href="{{ path('renz_admin_news_index') }}">News</a> &middot;
+					<a href="{{ path('renz_admin_newsletter_index') }}">Newsletter</a> &middot;
+					<a href="{{ path('renz_admin_album_index') }}">Gallery</a> &middot;
+					<a href="{{ path('renz_admin_slider_index') }}">Slider</a> &middot;
+					<a href="{{ path('renz_admin_testimonial_index') }}">Testimonial</a>
+					<a href="{{ path('renz_admin_user_index') }}">Users</a>
+				{% endif %}
+			</nav>
+			<p>Copyright &copy; 2014 <b><a HREF="http://2eeks.com" title="http://2eeks.com">2eeks IT Solutions</a></b> | Developed by <a HREF="mailto:kimmuzafars@gmail.com">Muzafar Ali Jatoi</a></p>
+		</div>
+	</footer>
+	<!-- End of Page footer -->
+	
+	<!-- Animated footer -->
+	<footer id="animated">
+		<ul>
+			<li><a href="{{ path('renz_admin_default_index') }}">Dashboard</a></li>
+			<li><a href="{{ path('renz_admin_room_index') }}">Rooms</a></li>
+			<li><a href="{{ path('renz_admin_room_new') }}">Add New Room</a></li>
+			<li><a href="{{ path('renz_admin_photo_index') }}">Photos</a></li>
+			<li><a href="{{ path('renz_admin_roomclosure_index') }}">Room Closure</a></li>
+			<!-- <li><a href="{{ path('renz_admin_condit_index') }}">Terms</a></li> -->
+			<li><a href="{{ path('renz_admin_contact_index') }}">Messages</a></li>
+			<li><a href="{{ path('renz_admin_booking_index') }}">Bookings</a></li>
+			<li><a href="{{ path('renz_admin_cms_index') }}">CMS</a></li>
+			<li><a href="{{ path('renz_admin_news_index') }}">News</a></li>
+			<li><a href="{{ path('renz_admin_newsletter_index') }}">Newsletter</a></li>
+			<li><a href="{{ path('renz_admin_album_index') }}">Gallery</a></li>
+			<li><a href="{{ path('renz_admin_slider_index') }}">Slider</a></li>
+			<li><a href="{{ path('renz_admin_testimonial_index') }}">Testimonial</a></li>
+			<li><a href="{{ path('renz_admin_user_index') }}">Users</a></li>
+		</ul>
+	</footer>
+	<!-- End of Animated footer -->
+	
+	<!-- Scroll to top link -->
+	<a href="#" id="totop">^ scroll to top</a>
+</html>

@@ -1,0 +1,6 @@
+<ul class="dropdown-menu">
+{% for room in rooms %}
+	<li><a href="{{ path('renz_main_room_show', { 'id': room.id }) }}">{% if app.request.locale=='ar' %}{{ room.titlear }}{% else %}{{ room.title }}{% endif %}</a></li>
+{% endfor %}
+<li><a href="{{ path('renz_main_room_index') }}">-- {{ 'site.label.viewAllRooms' | trans }} --</a></li>
+</ul>

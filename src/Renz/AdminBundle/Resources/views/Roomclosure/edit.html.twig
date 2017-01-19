@@ -1,0 +1,87 @@
+{% extends "::admin.html.twig" %}
+
+{% block pagetitle %}Room Closure List{% endblock %}
+	
+{% block javascriptcode %}
+<script type="text/javascript">
+
+$(document).ready(function(){
+	
+	/* setup navigation, content boxes, etc... */
+	Administry.setup();
+
+});
+</script>
+{% endblock %}
+
+{% block contentsinglecolumn %}
+
+{{ form_start(edit_form) }}
+
+	<!-- Left column/section -->
+	<section class="column width6 first">
+	
+	<h3>Update Room Closure</h3>
+	
+		<fieldset>
+			<legend>Fill in details and press save..</legend>
+			
+			<p>
+				{{ form_label(edit_form.room) }}<br/>
+				{{ form_widget(edit_form.room) }}
+				<small>Select Room / Multiple Rooms</small>
+			</p>
+			
+			<p>
+				<table>
+				<tr>
+					<td>{{ form_label(edit_form.closefrom) }}</td>
+					<td></td>
+					<td>{{ form_label(edit_form.closeto) }}</td>
+				</tr>
+				<tr>
+					<td>{{ form_widget(edit_form.closefrom) }}<small>Closing from</small></td>
+					<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -to- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+					<td>{{ form_widget(edit_form.closeto) }}<small>Closing to</small></td>
+				</tr>
+				</table>
+			</p>
+			
+			<p>
+				<table>
+				<tr><td colspan="3"><label class="required">RATE CATEGORY</label></td></tr>
+				<tr><td colspan="3"><small>&nbsp;&nbsp;&nbsp;Select Rate Category you want to close..</small></td></tr>
+				<tr>
+					<td>{{ form_widget(edit_form.isAvailableStandard) }} {{ form_label(edit_form.isAvailableStandard) }}</td>
+					<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+					<td>{{ form_widget(edit_form.isAvailableNonRefundable) }} {{ form_label(edit_form.isAvailableNonRefundable) }}</td>
+				</tr>
+				</table>
+			</p>
+			
+			<p class="box"><input type="submit" class="btn btn-green big" value="Save"/> or <a href="{{ path('renz_admin_roomclosure_index') }}">Cancel</a></p>
+	
+		</fieldset>
+	
+	</section>
+	<!-- End of Left column/section -->
+	
+	<!-- Right column/section -->
+	<aside class="column width2">
+		
+		<p><a href="{{ path('renz_admin_roomclosure_index') }}" class="btn btn-special"><img SRC="{{ asset('bundles/admin/img/page_white_go.png') }}" class="icon" alt=""/>Cancel and go back</a></p>
+		 
+		<div id="rightmenu">
+			<dl class="first">
+				<dt><img width="16" height="16" alt="" SRC="img/help.png"></dt>
+				<dd><a href="#">Help</a></dd>
+				<dd class="last">If you are a new user, you should read "Getting started"</dd>							
+			</dl>
+		</div>
+		
+	</aside>
+	<!-- End of Right column/section -->
+
+{{ form_end(edit_form) }}
+
+{% endblock %}

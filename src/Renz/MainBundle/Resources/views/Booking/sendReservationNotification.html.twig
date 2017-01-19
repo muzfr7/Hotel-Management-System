@@ -1,0 +1,25 @@
+<html>
+<head>
+	<title>New Reservation Notification</title>
+</head>
+<body>
+	<div id="mydiv">
+		
+		<h3>Dear Reservation Manager,</h3>
+		<br />
+		<p>A new reservation was made, please check following details for your reference:</p>
+		<br />
+		<p><b>Name:</b> {{ name }}</p>
+		<p><b>Reference:</b> {{ reference }}</p>
+		<br />
+		<p>For further information, please visit 
+			<a href="https://renz.com.sa{{ path('renz_admin_booking_show', { 'id': booking_id }) }}">https://renz.com.sa{{ path('renz_admin_booking_show', { 'id': booking_id }) }}</a>
+		</p>
+		<br />
+		<hr />
+		<p>Renz Hotel</p>
+		<p>Jeddah, Saudi Arabia</p>
+		
+	</div>
+</body>
+</html>

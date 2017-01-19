@@ -1,0 +1,235 @@
+{% extends '::base.html.twig' %}
+
+{% block content %}
+
+<style>
+	.error{color:red;}
+</style>
+
+<script>
+$(function (){
+	$('#bookingform').validate({
+		rules: {
+			'firstname': {
+		    	required: true,
+			},
+			'lastname': {
+			   required: true,
+			},
+			'email': {
+			      required: true,
+			      email: true,
+			      remote: {
+			        url: "{{ path('renz_main_security_checkemail') }}",
+			      	type: "post"
+			      },
+			},
+			'confirmemail': {
+			      required: true,
+			      email: true,
+			      equalTo: "#email",
+			},
+			'paswd': {
+			      required: true,
+			},
+			'paswd2': {
+			      required: true,
+			      equalTo: "#paswd",
+			},
+			'city': {
+			     required: true,
+			},
+			'country': {
+				required: true,
+			},
+			'mobile': {
+				  required: true,
+			      number: true
+			},
+		},
+		messages: {
+            email: {
+                required: "Enter your Email",
+                email: "Please enter a valid email address.",
+                remote: "Email already in use, please choose another!",
+            }
+        },
+	});
+});
+</script>
+
+<script language="javascript" type="text/javascript">
+<!--
+function popitup(url) {
+	newwindow=window.open(url,'name','height=600,width=900');
+	if (window.focus) {newwindow.focus()}
+	return false;
+}
+// -->
+</script>
+
+<!-- Parallax Effect -->
+<script type="text/javascript">$(document).ready(function(){$('#parallax-pagetitle').parallax("50%", -0.55);});</script>
+
+<section class="parallax-effect">
+  <div id="parallax-pagetitle" style="background-image: url({{ asset('bundles/main/images/parallax/parallax-01.jpg') }});">
+    <div class="color-overlay"> 
+      <!-- Page title -->
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12">
+            <ol class="breadcrumb">
+              <li><a href="{{ path('renz_main_index_index') }}">Home</a></li>
+              <li class="active">Register</li>
+            </ol>
+            <h1>Register</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<div class="container">
+  <div class="row"> 
+    
+    <!-- Blog -->
+    <section class="blog mt50">
+      <div class="col-md-12"> 
+        <!-- Article -->
+        <article style="border-bottom:0px;">
+          <div class="row">
+            
+            <div class="col-md-8 col-md-offset-2">
+              
+              <!-- or new user will be created.. -->
+              
+              <h2 class="lined-heading"><span>Create an account</span></h2>
+				
+				{% for flashMessage in app.session.flashbag.get('error') %}
+					{% if flashMessage %}
+					<div id="message">
+			    		<div class="alert alert-success alert-dismissable">
+			    			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+			    			{{ flashMessage | raw }}
+			    		</div>
+					</div>
+					{% endif %}
+				{% endfor %}
+              	
+				<form class="clearfix mt50" role="form" method="post" novalidate="novalidate" action="{{ path('renz_main_security_register') }}" name="bookingform" id="bookingform">
+				  
+				  <div class="row">
+					<div class="col-md-6">
+					  <div class="form-group">
+						<label for="firstname" accesskey="U"><span class="required">*</span> First Name</label>
+						<input name="firstname" type="text" id="firstname" class="form-control" required="required" />
+					  </div>
+					</div>
+					<div class="col-md-6">
+					  <div class="form-group">
+						<label for="lastname" accesskey="E"><span class="required">*</span> Last Name</label>
+						<input name="lastname" type="text" id="lastname" class="form-control" required="required" />
+					  </div>
+					</div>
+				  </div>
+				  
+				  <div class="row">
+					<div class="col-md-6">
+					  <div class="form-group">
+						<label for="email" accesskey="E"><span class="required">*</span> Email</label>
+						<input name="email" type="text" id="email" class="form-control" value="" required="required" />
+					  </div>
+				  	</div>
+				  	<div class="col-md-6">
+					  <div class="form-group">
+						<label for="confirmemail" accesskey="E"><span class="required">*</span> Confirm Email</label>
+						<input name="confirmemail" type="text" id="confirmemail" class="form-control" value="" required="required" />
+					  </div>
+				  	</div>
+				  </div>
+				  
+				  <div class="row">
+					<div class="col-md-6">
+					  <div class="form-group">
+						<label for="password" accesskey="P"><span class="required">*</span> Password</label>
+						<input name="paswd" type="password" id="paswd" class="form-control" required="required" />
+					  </div>
+				  	</div>
+				  	<div class="col-md-6">
+					  <div class="form-group">
+						<label for="paswd2" accesskey="E"><span class="required">*</span> Confirm Password</label>
+						<input name="paswd2" type="password" id="paswd2" class="form-control" required="required" />
+					  </div>
+				  	</div>
+				  </div>
+				  
+				  <br /><br />
+				  <h2 class="lined-heading"><span>Your Address</span></h2>
+				  
+				  <div class="row">
+					<div class="col-md-6">
+					  <div class="form-group">
+						<label for="address" accesskey="U">Address</label>
+						<input name="address" type="text" id="address" class="form-control" />
+					  </div>
+					</div>
+					<div class="col-md-6">
+					  <div class="form-group">
+						<label for="city" accesskey="E"><span class="required">*</span> City</label>
+						<input name="city" type="text" id="city" class="form-control" required="required" />
+					  </div>
+					</div>
+				  </div>
+				  
+				  <div class="row">
+					<div class="col-md-6">
+					  <div class="form-group">
+						<label for="zipcode" accesskey="U">Zip Code</label>
+						<input name="zipcode" type="text" id="zipcode" class="form-control" />
+					  </div>
+					</div>
+					<div class="col-md-6">
+					  <div class="form-group">
+						<label for="country" accesskey="E"><span class="required">*</span> Country</label>
+						<select name="country" id="country" class="form-control" required="required">
+							{% for country in countries %}
+								<option value="{{ country.id }}">{{ country.shortname }}</option>
+							{% endfor %}
+						</select>
+					  </div>
+					</div>
+				  </div>
+				  
+				  <div class="row">
+					<div class="col-md-6">
+					  <div class="form-group">
+						<label for="mobile" accesskey="U"><span class="required">*</span> Mobile</label>
+						<input name="mobile" type="text" id="mobile" class="form-control" required="required" />
+					  </div>
+					</div>
+				  </div>
+				  
+				  <button id="btn-submit" class="btn  btn-lg btn-primary"> Submit </button> | 
+			  	  <a href="{{ path('renz_main_page_index') }}" class="btn btn-lg btn-default">Cancel</a>
+				</form>
+				
+              
+            </div>
+            
+          </div>
+        </article>
+        
+      </div>
+    </section>
+    
+    
+    <!-- Rooms -->
+	{{ include('MainBundle:includes:homepage/_guestrooms.html.twig') }}
+    
+    
+  </div>
+</div>
+
+{% endblock %}

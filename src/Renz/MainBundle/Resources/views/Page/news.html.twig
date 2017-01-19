@@ -1,0 +1,75 @@
+{% extends '::base.html.twig' %}
+
+{% block content %}
+
+<!-- Parallax Effect -->
+<script type="text/javascript">$(document).ready(function(){$('#parallax-pagetitle').parallax("50%", -0.55);});</script>
+
+<section class="parallax-effect">
+  <div id="parallax-pagetitle" style="background-image: url({{ asset('bundles/main/images/parallax/parallax-01.jpg') }});">
+    <div class="color-overlay"> 
+      <!-- Page title -->
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12">
+            <ol class="breadcrumb">
+              <li><a href="{{ path('renz_main_index_index') }}">{{ 'site.topnav.home' | trans }}</a></li>
+              <li class="active"><a href="{{ path('renz_main_page_news') }}">{{ 'site.topnav.news' | trans }}</a></li>
+            </ol>
+            <h1>{% if entities %}{{ 'site.topnav.news' | trans }}{% else %}{% if app.request.locale=='ar' %}{{ entity.titlear }}{% else %}{{ entity.title }}{% endif %}{% endif %}</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<div class="container">
+  <div class="row"> 
+    
+    <!-- Blog -->
+    <section class="blog mt50">
+      <div class="col-md-9"> 
+       
+            <div class="col-md-12">
+              	
+              	{% if entities %}
+              		{% for entity in entities %}
+	              	<article>
+			          <div class="row">
+			            <div class="col-sm-1 col-xs-2 meta">
+			              <div class="meta-date"><span>{{ entity.createdAt | date('M') }}</span>{{ entity.createdAt | date('d') }}</div>
+			            </div>
+			            <div class="col-sm-11 col-xs-10 meta">
+			              <h2><a href="{{ path('renz_main_page_news', { 'slug': entity.slug }) }}">{% if app.request.locale=='ar' %}{{ entity.titlear }}{% else %}{{ entity.title }}{% endif %}</a></h2>
+			              <span class="meta-author"><i class="fa fa-user"></i><a href="#">{{ 'site.label.postedByAdministrator' | trans }}</a></span> 
+			              <span class="meta-category"><i class="fa fa-pencil"></i><a href="#">{{ 'site.label.renzHotel' | trans }}</a></span>
+			              <p class="intro">{% if app.request.locale=='ar' %}{{ entity.detailsar }}{% else %}{{ entity.details }}{% endif %}</p>
+			              <a href="{{ path('renz_main_page_news', { 'slug': entity.slug }) }}" class="btn btn-primary pull-right">{{ 'site.label.readmore' | trans }}</a> 
+			            </div>
+			          </div>
+			        </article>
+			        {% endfor %}
+              	{% else %}
+	              	<p>{% if app.request.locale=='ar' %}{{ entity.longDetailsar | raw }}{% else %}{{ entity.longDetails | raw }}{% endif %}</p>
+			  	{% endif %}
+		        
+            </div>
+        
+      </div>
+    </section>
+    
+    
+    <!-- Aside -->
+    <aside class="mt50">
+      <div class="col-md-3"> 
+		
+        {{ render(controller('MainBundle:Common:facilitiesatrenzhotel')) }}
+        
+      </div>
+    </aside>
+  </div>
+</div>
+
+{% endblock %}

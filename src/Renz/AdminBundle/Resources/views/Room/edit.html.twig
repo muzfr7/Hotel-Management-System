@@ -1,0 +1,325 @@
+{% extends "::admin.html.twig" %}
+
+{% block pagetitle %}Room List{% endblock %}
+	
+{% block javascriptcode %}
+<script type="text/javascript">
+
+/* sample tags */
+var tags=[
+	{tag:"js",freq:30},{tag:"jquery",freq:25}, {tag:"pojo",freq:10},{tag:"agile",freq:4},
+	{tag:"blog",freq:3},{tag:"canvas",freq:8}, {tag:"dialog",freq:3},{tag:"excel",freq:4},
+	{tag:"engine",freq:5},{tag:"flex",freq:18}, {tag:"firefox",freq:23},{tag:"javascript",freq:40},
+	{tag:"graph",freq:15},{tag:"grid",freq:20}, {tag:"hibernate",freq:13},{tag:"ical",freq:4},
+	{tag:"ldap",freq:9},{tag:"load",freq:20}, {tag:"security",freq:13},{tag:"XSS",freq:21},
+	{tag:"CSRF",freq:19},{tag:"html",freq:22}, {tag:"xml",freq:13},{tag:"tools",freq:21}
+];
+
+$(document).ready(function(){
+	
+	/* setup navigation, content boxes, etc... */
+	Administry.setup();
+	
+	$('#renz_modelbundle_room_longDetail').wysiwyg({
+    controls: {
+      strikeThrough : { visible : true },
+      underline     : { visible : true },
+      
+      justifyLeft   : { visible : true },
+      justifyCenter : { visible : true },
+      justifyRight  : { visible : true },
+      justifyFull   : { visible : true },
+      
+      indent  : { visible : true },
+      outdent : { visible : true },
+      
+      subscript   : { visible : true },
+      superscript : { visible : true },
+      
+      undo : { visible : true },
+      redo : { visible : true },
+      
+      insertOrderedList    : { visible : true },
+      insertUnorderedList  : { visible : true },
+      insertHorizontalRule : { visible : true },
+
+      h4: {
+              visible: true,
+              className: 'h4',
+              command: $.browser.msie ? 'formatBlock' : 'heading',
+              arguments: [$.browser.msie ? '<h4>' : 'h4'],
+              tags: ['h4'],
+              tooltip: 'Header 4'
+      },
+      h5: {
+              visible: true,
+              className: 'h5',
+              command: $.browser.msie ? 'formatBlock' : 'heading',
+              arguments: [$.browser.msie ? '<h5>' : 'h5'],
+              tags: ['h5'],
+              tooltip: 'Header 5'
+      },
+      h6: {
+              visible: true,
+              className: 'h6',
+              command: $.browser.msie ? 'formatBlock' : 'heading',
+              arguments: [$.browser.msie ? '<h6>' : 'h6'],
+              tags: ['h6'],
+              tooltip: 'Header 6'
+      },
+      
+      cut   : { visible : true },
+      copy  : { visible : true },
+      paste : { visible : true },
+      html  : { visible: true }
+    }
+  });
+
+
+	$('#renz_modelbundle_room_longDetailar').wysiwyg({
+	    controls: {
+	      strikeThrough : { visible : true },
+	      underline     : { visible : true },
+	      
+	      justifyLeft   : { visible : true },
+	      justifyCenter : { visible : true },
+	      justifyRight  : { visible : true },
+	      justifyFull   : { visible : true },
+	      
+	      indent  : { visible : true },
+	      outdent : { visible : true },
+	      
+	      subscript   : { visible : true },
+	      superscript : { visible : true },
+	      
+	      undo : { visible : true },
+	      redo : { visible : true },
+	      
+	      insertOrderedList    : { visible : true },
+	      insertUnorderedList  : { visible : true },
+	      insertHorizontalRule : { visible : true },
+
+	      h4: {
+	              visible: true,
+	              className: 'h4',
+	              command: $.browser.msie ? 'formatBlock' : 'heading',
+	              arguments: [$.browser.msie ? '<h4>' : 'h4'],
+	              tags: ['h4'],
+	              tooltip: 'Header 4'
+	      },
+	      h5: {
+	              visible: true,
+	              className: 'h5',
+	              command: $.browser.msie ? 'formatBlock' : 'heading',
+	              arguments: [$.browser.msie ? '<h5>' : 'h5'],
+	              tags: ['h5'],
+	              tooltip: 'Header 5'
+	      },
+	      h6: {
+	              visible: true,
+	              className: 'h6',
+	              command: $.browser.msie ? 'formatBlock' : 'heading',
+	              arguments: [$.browser.msie ? '<h6>' : 'h6'],
+	              tags: ['h6'],
+	              tooltip: 'Header 6'
+	      },
+	      
+	      cut   : { visible : true },
+	      copy  : { visible : true },
+	      paste : { visible : true },
+	      html  : { visible: true }
+	    }
+	  }); 
+	  
+  
+	/* tag input field */
+	$("#renz_modelbundle_room_facility").tagInput({
+		tags:tags,
+		//jsonUrl:"tags.json",
+		sortBy:"frequency",
+		suggestedTags:["Air conditioning", "Flat-screen TV", "Free WiFi", "1 bed", "2 beds", "40 m2", "60 m2", "80 m2", "5 beds", "3 beds", "Garden / City view"],
+		tagSeparator:",",
+		autoFilter:true,
+		autoStart:false,
+		//suggestedTagsPlaceHolder:$("#suggested"),
+		boldify:true
+	});
+
+	/* tag input field */
+	$("#renz_modelbundle_room_facilityar").tagInput({
+		tags:tags,
+		//jsonUrl:"tags.json",
+		sortBy:"frequency",
+		suggestedTags:["Air conditioning", "Flat-screen TV", "Free WiFi", "1 bed", "2 beds", "40 m2", "60 m2", "80 m2", "5 beds", "3 beds", "Garden / City view"],
+		tagSeparator:",",
+		autoFilter:true,
+		autoStart:false,
+		//suggestedTagsPlaceHolder:$("#suggested"),
+		boldify:true
+	});
+
+});
+</script>
+{% endblock %}
+
+{% block contentsinglecolumn %}
+
+{{ form_start(edit_form) }}
+
+	<!-- Left column/section -->
+	<section class="column width6 first">
+	
+	<h3>Update Room</h3>
+	
+		<fieldset>
+			<legend>Fill in details and press save..</legend>
+			
+			<p>
+				{{ form_label(edit_form.title) }}<br/>
+				{{ form_widget(edit_form.title) }}
+				<small>e.g. Villa</small>
+			</p>
+			
+			<div class="clearfix leading">
+				<div class="column width3 first">
+					<p>
+						{{ form_label(edit_form.price) }}<br/>
+						{{ form_widget(edit_form.price) }}
+						<small style="width:650px;">e.g. 100 <span style="color:blue;">(Standard Price)</span></small>
+					</p>
+				</div>
+				
+				<div class="column width3">
+					<p>
+						{{ form_label(edit_form.nonRefundablePrice) }}<br/>
+						{{ form_widget(edit_form.nonRefundablePrice) }}
+						<small>e.g. 400 <span style="color:blue;">(Non-Refundable Price)</span></small>
+					</p>
+				</div>
+			</div>
+			
+			<div class="clearfix leading">
+				<div class="column width3 first">
+					<p>
+						{{ form_label(edit_form.capacity) }}<br/>
+						{{ form_widget(edit_form.capacity) }}
+						<small>e.g. 3 people <span style="color:blue;">(Maximum allowed guests in this room)</span></small>
+					</p>
+				</div>
+			</div>
+			
+			<p>
+				{{ form_label(edit_form.shortDetail) }}
+				<br/>
+				{{ form_widget(edit_form.shortDetail) }}
+			</p>
+			
+			<p>
+				{{ form_label(edit_form.longDetail) }}
+				<br/>
+				{{ form_widget(edit_form.longDetail) }}
+			</p>
+			
+			<p>
+				{{ form_label(edit_form.roomOrder) }}<br/>
+				{{ form_widget(edit_form.roomOrder) }}
+				<small>e.g. 5 <span style="color:blue;">(All Rooms should be ordered in sequence)</span></small>
+			</p>
+			
+			<p>
+				{{ form_label(edit_form.file) }}
+				<br />
+				<a href="{{ asset('uploads/rooms_main/'~entity.path) }}" target="_blank">
+					<img src="{{ asset('uploads/rooms_main/'~entity.path) }}" title="{{ entity.title }}" width="150px" />
+				</a>
+				<br/>
+				{{ form_widget(edit_form.file) }}
+				<small><span style="color:blue;">(Default Room Photo)</span></small>
+			</p>
+			
+			<p class="box" style="text-align: center;">IN ARABIC</p>
+			
+			<p>
+				{{ form_label(edit_form.titlear) }}<br/>
+				{{ form_widget(edit_form.titlear) }}
+				<small>e.g. Villa</small>
+			</p>
+			
+			<p>
+				{{ form_label(edit_form.shortDetailar) }}
+				<br/>
+				{{ form_widget(edit_form.shortDetailar) }}
+			</p>
+			
+			<p>
+				{{ form_label(edit_form.longDetailar) }}
+				<br/>
+				{{ form_widget(edit_form.longDetailar) }}
+			</p>
+			
+			<p class="box"><input type="submit" class="btn btn-green big" value="Save"/> or <a href="{{ path('renz_admin_room_index') }}">Cancel</a></p>
+	
+		</fieldset>
+	
+	</section>
+	<!-- End of Left column/section -->
+	
+	<!-- Right column/section -->
+	<aside class="column width2">
+		
+		<p><a href="{{ path('renz_admin_room_index') }}" class="btn btn-special"><img SRC="{{ asset('bundles/admin/img/page_white_go.png') }}" class="icon" alt=""/>Cancel and go back</a></p>
+		
+		<div class="content-box">
+			<header>
+				<h3>Room Visibility</h3>
+			</header>
+			<section>
+				Choose whether or not you want this Room to be publicly visible.
+				<p>{{ form_widget(edit_form.status) }}</p>
+			</section>
+		</div>
+		
+		<div class="content-box">
+			<header>
+				<h3>Guest Favourite</h3>
+			</header>
+			<section>
+				Choose whether or not this Room to display in Guest Favourite Room Section..
+				<p>{{ form_widget(edit_form.guestfavourite) }}</p>
+			</section>
+		</div>
+		
+		<div class="content-box">
+			<header>
+				<h3>Room Facilities</h3>
+			</header>
+			<section>
+				Enter any number of facilities separated by comma.
+				<p>{{ form_widget(edit_form.facility) }}</p>
+			</section>
+		</div>
+		
+		<div class="content-box">
+			<header>
+				<h3>Room Facilities In Arabic</h3>
+			</header>
+			<section>
+				Enter any number of facilities separated by comma in Arabic.
+				<p>{{ form_widget(edit_form.facilityar) }}</p>
+			</section>
+		</div>
+		 
+		<div id="rightmenu">
+			<dl class="first">
+				<dt><img width="16" height="16" alt="" SRC="img/help.png"></dt>
+				<dd><a href="#">Help</a></dd>
+				<dd class="last">If you are a new user, you should read "Getting started"</dd>							
+			</dl>
+		</div>
+		
+	</aside>
+	<!-- End of Right column/section -->
+
+{{ form_end(edit_form) }}
+
+{% endblock %}

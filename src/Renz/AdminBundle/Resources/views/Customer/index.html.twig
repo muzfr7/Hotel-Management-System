@@ -1,0 +1,67 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Customer list</h1>
+
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>Username</th>
+                <th>Salt</th>
+                <th>Password</th>
+                <th>Email</th>
+                <th>Address</th>
+                <th>City</th>
+                <th>Zip</th>
+                <th>Mobile</th>
+                <th>Cardownername</th>
+                <th>Cardnumber</th>
+                <th>Isactive</th>
+                <th>Passwordresetcode</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('customer_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{ entity.firstname }}</td>
+                <td>{{ entity.lastname }}</td>
+                <td>{{ entity.username }}</td>
+                <td>{{ entity.salt }}</td>
+                <td>{{ entity.password }}</td>
+                <td>{{ entity.email }}</td>
+                <td>{{ entity.address }}</td>
+                <td>{{ entity.city }}</td>
+                <td>{{ entity.zip }}</td>
+                <td>{{ entity.mobile }}</td>
+                <td>{{ entity.cardownername }}</td>
+                <td>{{ entity.cardnumber }}</td>
+                <td>{{ entity.isActive }}</td>
+                <td>{{ entity.passwordresetcode }}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('customer_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('customer_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('customer_new') }}">
+                Create a new entry
+            </a>
+        </li>
+    </ul>
+    {% endblock %}

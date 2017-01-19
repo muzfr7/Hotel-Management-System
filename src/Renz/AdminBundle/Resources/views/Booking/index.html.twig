@@ -1,0 +1,71 @@
+{% extends "::admin.html.twig" %}
+
+{% block pagetitle %}Bookings{% endblock %}
+	
+{% block contentsinglecolumn %}
+	<br />				
+	
+	{% for flashMessage in app.session.flashbag.get('error') %}
+	    <div class="box box-success">
+	        {{ flashMessage }}
+	    </div>
+	{% endfor %}
+	
+	<div class="box box-info">Click Show to view details | Click edit to modify details</div>
+	
+	<table class="display stylized" id="data-table">
+		<thead>
+			<tr>
+				<th>REF #</th>
+                <th>NAME</th>
+                <th>ROOM</th>
+                <th>DATE</th>
+                <th>CUSTOMER</th>
+                <th>STATUS</th>
+                <th>ACTIONS</th>
+            </tr>
+		</thead>
+		<tbody>
+			{% for entity in entities %}
+	            <tr class="{{ cycle(['gradeX', 'gradeA'], loop.index0) }}">
+	                <td><a href="{{ path('renz_admin_booking_show', { 'id': entity.id }) }}">{{ entity.bookingreference }}</a></td>
+	                <td>{{ entity.firstname }} {{ entity.lastname }}</td>
+	                <td>{{ entity.room }}</td>
+	                <td>{% if entity.updatedAt %}{{ entity.updatedAt|date('jS, F Y - H:i:s') }}{% endif %}</td>
+	                <td class="center">
+	                	{% if entity.bookingstatuscustomer=="Cancel" %}
+	                		<font color="red">{{ entity.bookingstatuscustomer }}led</font>
+	                	{% else %}
+	                		{{ entity.bookingstatuscustomer }}
+	                	{% endif %}
+	                </td>
+	                <td class="center">{{ entity.bookingstatus }}</td>
+	                <td align="center">
+		                <p>
+		                	<a href="{{ path('renz_admin_booking_show', { 'id': entity.id }) }}" class="btn">SHOW</a>
+		                    <a href="{{ path('renz_admin_booking_edit', { 'id': entity.id }) }}" class="btn">EDIT</a>
+		                </p>
+	                </td>
+	            </tr>
+	        {% endfor %}
+		</tbody>
+		<tfoot>
+			<tr>
+				<th>REF #</th>
+				<th>NAME</th>
+                <th>ROOM</th>
+                <th>DATE</th>
+                <th>CUSTOMER</th>
+                <th>STATUS</th>
+                <th>ACTIONS</th>
+			</tr>
+		</tfoot>
+	</table>
+	<div style="clear:both;"></div>
+	<p class="leading" style="float:right;">
+		<a href="{{ path('renz_admin_booking_new') }}" class="btn btn-special btn-green">
+			<img SRC="{{ asset('bundles/admin/img/add.png') }}" class="icon" alt=""/>
+			Add New Booking
+		</a>
+	</p>
+{% endblock %}

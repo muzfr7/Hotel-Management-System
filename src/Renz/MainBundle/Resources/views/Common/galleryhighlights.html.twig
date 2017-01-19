@@ -1,0 +1,8 @@
+{% for entity in galleryhighlights %}
+<div class="item">
+	<a href="{{ asset('uploads/rooms/'~entity.path) }}" data-rel="prettyPhoto[gallery1]">
+		<img src="{{ asset('uploads/rooms/'~entity.path) }}" alt="{% if app.request.locale=='ar' %}{{ entity.titlear }}{% else %}{{ entity.title }}{% endif %}" />
+		<i class="fa fa-search"></i>
+	</a>
+</div>
+{% endfor %}

@@ -1,0 +1,79 @@
+site:
+  title: Renz Hotel
+  
+  #top header navigation
+  topheader:
+    login: Login
+    register: Register
+  
+  #top navigation
+  topnav:
+    home: Home
+    aboutus: About Us
+    facilities: Facilities
+    rooms: Rooms
+    news: News
+    gallery: Gallery
+    contact: Contact
+  
+  #messages
+  
+  
+  #buttons
+  button:
+    seeRooms: See Rooms
+    bookNow: Book Now
+    submit: Submit
+    contact: Contact
+    
+  #labels - for some fields etc
+  label:
+    roomType: Room Type
+    selectRoom: Select A Room
+    checkin: Check-in
+    checkout: Check-out
+    guests: Guest(s)
+    selectRoomFirst: Select Room First
+    guestFavouriteRoom: Guest Favourite Rooms
+    aboutRenzHotel: About Renz Hotel
+    whenWouldYouLikeToStay: When would you like to stay at Renz Hotel?
+    hotelTabs: Hotel Tabs
+    whatOurVisitorsExperienced: What Our Visitors Experienced
+    galleryHighlights: Gallery Highlights
+    facilitiesAtRenzHotel: Facilities at Renz Hotel
+    readmore: Read More
+    welcomeToRenzHotel: Welcome to Renz Hotel 
+    renzHotel: RENZ HOTEL
+    address: Address
+    fromOurNews: From Our News
+    receiveOurNewsLetter: Receive Our Newsletter
+    newsletterSubscriptionLabel: Please enter your email address below and press submit to subscribe to our news letter!
+    enterYourEmailAddress: Enter Your Email Address
+    sar: SAR
+    night: a night
+    social: Social
+    yourMessage: Your Message
+    subject: Subject
+    other: Other
+    room: Room
+    booking: Booking
+    yourName: Your Name
+    email: Email
+    all: All
+    postedByAdministrator: Posted by: Administrator
+    foodDrink: Food & Drink
+    internet: Internet
+    parking: Parking 
+    services: Services 
+    general: General 
+    englishLang: English Language
+    arabicLang: Arabic Language
+    viewAllRooms: View All Rooms
+    roomList: Room List
+    roomDetail: Room Detail
+    reservation: Reservation
+    includeBreakFast: Includes break fast
+    moreDetail: More Detail
+    policiesOfRenzHotel: Policies of Renz Hotel
+    cardAcceptedAtRenzHotel: Cards accepted at Renz Hotel 
+    preAuthorizeCard: Renz Hotel accepts these cards and reserves the right to pre-authorize your card prior to arrival.

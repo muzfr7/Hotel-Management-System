@@ -1,0 +1,91 @@
+{% extends '::base.html.twig' %}
+
+{% block content %}
+
+<!-- Parallax Effect -->
+<script type="text/javascript">$(document).ready(function(){$('#parallax-pagetitle').parallax("50%", -0.55);});</script>
+
+<section class="parallax-effect">
+  <div id="parallax-pagetitle" style="background-image: url({{ asset('bundles/main/images/parallax/parallax-01.jpg') }});">
+    <div class="color-overlay"> 
+      <!-- Page title -->
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12">
+            <ol class="breadcrumb">
+              <li><a href="{{ path('renz_main_index_index') }}">Home</a></li>
+              <li class="active">Search Result</li>
+            </ol>
+            <h1>Search Result</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Rooms -->
+<section class="rooms mt100">
+  <div class="container">
+    <div class="row room-list fadeIn appear"> 
+      
+      {% set totalRecordsStatic = availableRooms|length %}
+      {% set totalRecordsDynamic = availableRooms|length %}
+      
+      {% for availableRoom in availableRooms %}
+      		
+      	  {% if searchData.dateCheckin|date('U')>=availableRoom.fromdate|date('U') and searchData.dateCheckout|date('U')<=availableRoom.todate|date('U') %}
+			 {% set totalRecordsDynamic = (totalRecordsDynamic-1) %}
+		      <!-- Room -->
+		      <div class="col-sm-4 single">
+		        <div class="room-thumb"> <img src="{{ asset('uploads/rooms_main/'~availableRoom.room.path) }}" alt="{{ availableRoom.room.title }}" class="img-responsive" />
+		          <div class="mask">
+		            <div class="main">
+		              <h5>{{ availableRoom.room.title }}</h5>
+		              <div class="price">SAR {{ availableRoom.room.price }}<span>a night</span></div>
+		            </div>
+		            <div class="content">
+		              <p>
+		              	<span>{{ availableRoom.room.title }}</span> 
+		              	{{ availableRoom.room.shortDetail }}
+		              </p>
+		              <div class="row">
+		                <div class="col-xs-6">
+		                  <ul class="list-unstyled">
+		                  	{% set facilities = availableRoom.room.facility|split(',') %}
+		                  	{% for facility in facilities %}
+		                  		{% if loop.index < 6 %}
+			                  		{% if loop.index > 3 %}
+			                  			</ul>
+			                  			</div>
+			                  			<div class="col-xs-6">
+			                  			<ul class="list-unstyled">
+									{% endif %}
+			                    	<li><i class="fa fa-check-circle"></i> {{ facility }}</li>
+		                    	{% endif %}
+		                    {% endfor %}
+		                  </ul>
+		                </div>
+		              </div>
+		              <a href="{{ path('renz_main_room_show', { 'id': availableRoom.room.id }) }}" class="btn btn-primary btn-block">Book Now</a> </div>
+		          </div>
+		        </div>
+		      </div>
+		      <!-- End Room -->
+	      {% endif %}
+	      
+      {% endfor %}
+      
+      {% if totalRecordsDynamic == totalRecordsStatic %}
+      	<div class="col-sm-8 col-sm-offset-2">
+      	  <div class="alert alert-danger alert-dismissable">
+          	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+          	Sorry, We don't have any room type available in your search criteria!
+          </div>
+        </div>
+      {% endif %}
+      
+	</div>
+  </div>
+</section>
+{% endblock %}

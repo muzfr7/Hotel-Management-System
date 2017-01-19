@@ -1,0 +1,68 @@
+{% extends "::admin.html.twig" %}
+
+{% block pagetitle %}Room Closure List{% endblock %}
+	
+{% block content %}
+	<br />				
+	
+	{% for flashMessage in app.session.flashbag.get('error') %}
+	    <div class="box box-success">
+	        {{ flashMessage }}
+	    </div>
+	{% endfor %}
+	
+	<div class="box box-info">Click Show to view details | Click edit to modify details</div>
+	<div class="box box-info">Note: Do not apply more than 1 closure to any room..</div>
+	
+	<table class="display stylized" id="data-table">
+		<thead>
+			<tr>
+                <th>ROOM</th>
+                <th>CLOSE FROM</th>
+                <th>CLOSE TO</th>
+                <th>ACTIONS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+            </tr>
+		</thead>
+		<tbody>
+			{% for entity in entities %}
+	            <tr class="{{ cycle(['gradeX', 'gradeA'], loop.index0) }}">
+	                <td>
+	                	{% for room in entity.room %}
+	                		<a href="{{ path('renz_admin_room_show', { 'id': room.id }) }}">{{ room }}</a> | 
+	                	{% endfor %}
+	                </td>
+	                <td>{% if entity.closefrom %}{{ entity.closefrom|date('l jS F, Y') }}{% endif %}</td>
+	                <td>{% if entity.closeto %}{{ entity.closeto|date('l jS F, Y') }}{% endif %}</td>
+	                <td>
+		                <p>
+		                	<a href="{{ path('renz_admin_roomclosure_show', { 'id': entity.id }) }}" class="btn">SHOW</a>
+		                    <a href="{{ path('renz_admin_roomclosure_edit', { 'id': entity.id }) }}" class="btn">EDIT</a>
+		                </p>
+	                </td>
+	            </tr>
+	        {% endfor %}
+		</tbody>
+		<tfoot>
+			<tr>
+				<th>ROOM</th>
+                <th>CLOSE FROM</th>
+                <th>CLOSE TO</th>
+                <th>ACTIONS</th>
+			</tr>
+		</tfoot>
+	</table>
+	
+{% endblock %}
+
+{% block sidenav %}
+	<p class="leading">
+		<a href="{{ path('renz_admin_roomclosure_new') }}" class="btn btn-special btn-green">
+			<img SRC="{{ asset('bundles/admin/img/add.png') }}" class="icon" alt=""/>
+			Add New Room Closure
+		</a>
+	</p>
+	<div class="box">
+		You are now using <b class="big">72%</b> of your allowed storage capacity.
+		<div id="capacity" class="progress progress-green"><span><b></b></span></div>
+	</div>
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends "::admin.html.twig" %}
+
+{% block pagetitle %}Room Availability{% endblock %}
+	
+{% block contentsinglecolumn %}
+	
+	<script>
+        // Regular datepickr
+    	datepickr('#datepickr');
+    </script>
+	
+	<br />				
+	
+	{% for flashMessage in app.session.flashbag.get('error') %}
+	    <div class="box box-success">
+	        {{ flashMessage }}
+	    </div>
+	{% endfor %}
+	
+	<div class="box box-info">Set Rooms Availbility by Selecting <b>Date Range</b></div>
+	
+	<form action="{{ path('renz_admin_roomavailabilitydate_index') }}" method="post">
+		<div class="content-box">
+			<header>
+				<h3>Select Date Range</h3>
+			</header>
+			<section style="width:99%;text-align:center;">
+				<p>
+					<b>From Date: </b><input type="date"  id="fromdate" name="fromdate" />
+					<b>To Date: </b><input type="date"  id="todate" name="todate" /> 
+					<input type="submit" name="" value="Select Period" class="btn" />
+				</p>
+				<br />
+			</section>
+		</div>
+	</form>
+	
+	<form action="{{ path('renz_admin_roomavailabilitydate_index') }}" method="post">
+		<div style="overflow:scroll; overflow-y:hidden; {% if dates is empty %}display:none;{% endif %}">
+			<table class="display stylized">
+				<thead>
+					<tr>
+						<th></th>
+						{% for date in dates %}
+			    			<th style="text-align: center; {% if date|date('l')=='Friday' or date|date('l')=='Saturday' %}background:#c4e3ff !important; color:black;{% endif %}">
+			    				{{ date|date('d') }}<br />
+			    				{{ date|date('F') }}<br />
+			    				{{ date|date('Y') }}
+			    			</th>
+			    		{% endfor %}
+		    		</tr>
+				</thead>
+				<tbody>
+					{% for room in rooms %}
+						<tr>
+				    		<th>{{ room.title }}</th>
+				    		{% for date in dates %}
+				    			<td style="text-align: center;">
+				    				<input type="text" name="{{ room.id }}|{{ date }}" id="{{ room.id }}|{{ date }}" style="width:40px; text-align:center;" />
+				    			</td>
+				    		{% endfor %}
+				    	</tr>
+				  	{% endfor %}
+				</tbody>
+			</table>
+		</div>
+		<p style="text-align: right;"><input type="submit" name="btnSubmit" value="Update Availability" class="btn" /></p>
+	</form>
+	
+{% endblock %}

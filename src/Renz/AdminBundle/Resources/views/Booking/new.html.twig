@@ -1,0 +1,220 @@
+{% extends "::admin.html.twig" %}
+
+{% block pagetitle %}Bookings{% endblock %}
+	
+{% block javascriptcode %}
+<script type="text/javascript">
+$(document).ready(function(){
+	/* setup navigation, content boxes, etc... */
+	Administry.setup();
+});
+</script>
+{% endblock %}
+
+{% block contentsinglecolumn %}
+
+{{ form_start(form) }}
+
+	<!-- Left column/section -->
+	<section class="column width6 first">
+	
+	<h3>Add New Booking</h3>
+	
+	<fieldset>
+		<legend>BOOKING INFORMATION</legend>
+		
+		<div class="clearfix leading">
+			<div class="column width3 first">
+				<p>
+					{{ form_label(form.room) }}<br/>
+					{{ form_widget(form.room) }}
+				</p>
+			</div>
+			
+			<div class="column width3">
+				<p>
+					{{ form_label(form.guests) }}<br/>
+					{{ form_widget(form.guests) }}
+				</p>
+			</div>
+		</div>
+		
+		<div class="clearfix leading">
+			<div class="column width3 first">
+				<p>
+					{{ form_label(form.dateCheckin) }}<br/>
+					{{ form_widget(form.dateCheckin) }}
+				</p>
+			</div>
+			
+			<div class="column width3">
+				<p>
+					{{ form_label(form.dateCheckout) }}<br/>
+					{{ form_widget(form.dateCheckout) }}
+				</p>
+			</div>
+		</div>
+		
+		<p>
+			{{ form_label(form.totalDays) }}
+			<br/>
+			{{ form_widget(form.totalDays) }}
+		</p>
+		
+		<p>
+			{{ form_label(form.specialRequests) }}
+			<br/>
+			{{ form_widget(form.specialRequests) }}
+		</p>
+	
+	</fieldset>
+	
+	<fieldset>
+		<legend>PERSONAL INFORMATION</legend>
+		
+		<div class="clearfix leading">
+			<div class="column width3 first">
+				<p>
+					{{ form_label(form.firstname) }}<br/>
+					{{ form_widget(form.firstname) }}
+				</p>
+			</div>
+			
+			<div class="column width3">
+				<p>
+					{{ form_label(form.lastname) }}<br/>
+					{{ form_widget(form.lastname) }}
+				</p>
+			</div>
+		</div>
+		
+		<div class="clearfix leading">
+			<div class="column width3 first">
+				<p>
+					{{ form_label(form.email) }}<br/>
+					{{ form_widget(form.email) }}
+				</p>
+			</div>
+			
+			<div class="column width3">
+				<p>
+					{{ form_label(form.address) }}<br/>
+					{{ form_widget(form.address) }}
+				</p>
+			</div>
+		</div>
+		
+		<div class="clearfix leading">
+			<div class="column width3 first">
+				<p>
+					{{ form_label(form.city) }}<br/>
+					{{ form_widget(form.city) }}
+				</p>
+			</div>
+			
+			<div class="column width3">
+				<p>
+					{{ form_label(form.zipcode) }}<br/>
+					{{ form_widget(form.zipcode) }}
+				</p>
+			</div>
+		</div>
+		
+		<div class="clearfix leading">
+			<div class="column width3 first">
+				<p>
+					{{ form_label(form.country) }}<br/>
+					{{ form_widget(form.country) }}
+				</p>
+			</div>
+			
+			<div class="column width3">
+				<p>
+					{{ form_label(form.mobile) }}<br/>
+					{{ form_widget(form.mobile) }}
+				</p>
+			</div>
+		</div>
+		
+	</fieldset>	
+	
+	<fieldset>
+		<legend>PAYMENT INFORMATION</legend>
+		
+		<div class="clearfix leading">
+			<div class="column width6 first">
+				<p>
+					{{ form_label(form.cardownername) }}<br/>
+					{{ form_widget(form.cardownername) }}
+				</p>
+			</div>
+		</div>
+		
+		<div class="clearfix leading">
+			<div class="column width3 first">
+				<p>
+					{{ form_label(form.cardtype) }}<br/>
+					{{ form_widget(form.cardtype) }}
+				</p>
+			</div>
+			
+			<div class="column width3">
+				<p>
+					{{ form_label(form.cardnumber) }}<br/>
+					{{ form_widget(form.cardnumber) }}
+				</p>
+			</div>
+		</div>
+		
+		<div class="clearfix leading">
+			<div class="column width3 first">
+				<p>
+					{{ form_label(form.expiryMonth) }}<br/>
+					{{ form_widget(form.expiryMonth) }}
+				</p>
+			</div>
+			
+			<div class="column width3">
+				<p>
+					{{ form_label(form.expiryYear) }}<br/>
+					{{ form_widget(form.expiryYear) }}
+				</p>
+			</div>
+		</div>
+		
+		<p class="box"><input type="submit" class="btn btn-green big" value="Save"/> or <a href="{{ path('renz_admin_booking_index') }}">Cancel</a></p>
+	
+	</fieldset>
+	
+	</section>
+	<!-- End of Left column/section -->
+	
+	<!-- Right column/section -->
+	<aside class="column width2">
+		
+		<p><a href="{{ path('renz_admin_booking_index') }}" class="btn btn-special"><img SRC="{{ asset('bundles/admin/img/page_white_go.png') }}" class="icon" alt=""/>Cancel and go back</a></p>
+		
+		<div class="content-box">
+			<header>
+				<h3>Booking Status</h3>
+			</header>
+			<section>
+				Change Booking Status
+				<p>{{ form_widget(form.bookingstatus) }}</p>
+			</section>
+		</div>
+		 
+		<div id="rightmenu">
+			<dl class="first">
+				<dt><img width="16" height="16" alt="" SRC="img/help.png"></dt>
+				<dd><a href="#">Help</a></dd>
+				<dd class="last">If you are a new user, you should read "Getting started"</dd>							
+			</dl>
+		</div>
+		
+	</aside>
+	<!-- End of Right column/section -->
+
+{{ form_end(form) }}
+
+{% endblock %}

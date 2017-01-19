@@ -1,0 +1,44 @@
+{% for entity in favouriterooms %}
+<!-- Room -->
+<div class="col-sm-4 single">
+  <div class="room-thumb"> <img src="{{ asset('uploads/rooms_main/'~entity.path) }}" alt="{{ entity.title }}" class="img-responsive" />
+    <div class="mask">
+      <div class="main">
+        <h5>{% if app.request.locale=='ar' %}{{ entity.titlear }}{% else %}{{ entity.title }}{% endif %}</h5>
+        <div class="price">{{ 'site.label.sar' | trans }} {{ entity.price }}<span>{{ 'site.label.night' | trans }}</span></div>
+      </div>
+      <div class="content">
+        <p>
+        	<span>{% if app.request.locale=='ar' %}{{ entity.titlear }}{% else %}{{ entity.title }}{% endif %}</span> 
+			{% if app.request.locale=='ar' %}{{ entity.shortDetailar }}{% else %}{{ entity.shortDetail }}{% endif %}
+        </p>
+        <div class="row">
+          <div class="col-xs-6">
+            <ul class="list-unstyled">
+            	
+            	{% if app.request.locale=='ar' %}
+            		{% set facilities = entity.facilityar|split(',') %}
+            	{% else %}
+            		{% set facilities = entity.facility|split(',') %}
+            	{% endif %}
+            	
+            	{% for facility in facilities %}
+            		{% if loop.index < 6 %}
+              		{% if loop.index > 3 %}
+              			</ul>
+              			</div>
+              			<div class="col-xs-6">
+              			<ul class="list-unstyled">
+				{% endif %}
+                	<li><i class="fa fa-check-circle"></i> {{ facility }}</li>
+              	{% endif %}
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+        <a href="{{ path('renz_main_room_show', { 'id': entity.id }) }}" class="btn btn-primary btn-block">{{ 'site.button.bookNow' | trans }}</a> </div>
+    </div>
+  </div>
+</div>
+<!-- End Room -->
+{% endfor %}

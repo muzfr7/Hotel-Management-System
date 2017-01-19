@@ -1,0 +1,447 @@
+{% extends '::base.html.twig' %}
+
+{% block content %}
+
+<style>
+	.error{color:red;}
+</style>
+
+<script>
+$(function (){
+	$('#bookingform').validate({
+		rules: {
+			'firstname': {
+		    	required: true,
+			},
+			'lastname': {
+			   required: true,
+			},
+			{% if customer %}
+      	  	{% else %}
+				'email': {
+				      required: true,
+				      email: true,
+				      remote: {
+				        url: "{{ path('renz_main_security_checkemail') }}",
+				      	type: "post"
+				      },
+				},
+				'confirmemail': {
+				      required: true,
+				      email: true,
+				      equalTo: "#email",
+				},
+				'paswd': {
+				      required: true,
+				},
+				'paswd2': {
+				      required: true,
+				      equalTo: "#paswd",
+				},
+			{% endif %}
+			'city': {
+			     required: true,
+			},
+			'country': {
+				required: true,
+			},
+			'mobile': {
+				  required: true,
+			      number: true
+			},
+			'cardownername': {
+			      required: true,
+			},
+			'cardtype': {
+			      required: true,
+			},
+			'cardnumber': {
+				required: true,
+			},
+			'expirydate_month': {
+			      required: true,
+			},
+			'expirydate_year': {
+				required: true,
+			},
+			'agree': {
+				required: true,
+			},
+		},
+		messages: {
+            email: {
+                required: "Enter your Email",
+                email: "Please enter a valid email address.",
+                remote: "Email already in use, please choose another!",
+            }
+        },
+	});
+});
+</script>
+
+<script language="javascript" type="text/javascript">
+<!--
+function popitup(url) {
+	newwindow=window.open(url,'name','height=600,width=900');
+	if (window.focus) {newwindow.focus()}
+	return false;
+}
+// -->
+</script>
+
+<!-- Parallax Effect -->
+<script type="text/javascript">$(document).ready(function(){$('#parallax-pagetitle').parallax("50%", -0.55);});</script>
+
+<section class="parallax-effect">
+  <div id="parallax-pagetitle" style="background-image: url({{ asset('bundles/main/images/parallax/parallax-01.jpg') }});">
+    <div class="color-overlay"> 
+      <!-- Page title -->
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12">
+            <ol class="breadcrumb">
+              <li><a href="{{ path('renz_main_index_index') }}">Home</a></li>
+              <li class="active">Booking</li>
+            </ol>
+            <h1>Booking</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<div class="container">
+  <div class="row"> 
+
+  	{% set subtotal = 0 %}
+
+  	{# Below iteration is only for calculating subtotal #}
+  	{% for rd in reservationDates %}
+		{% if rd[1] == "NONREFUNDABLE" %}
+			{% set subtotal = subtotal + entity.nonRefundablePrice %}
+		{% elseif rd[1] == "STANDARD" %}
+			{% set subtotal = subtotal + entity.price %}
+		{% endif %}
+	{% endfor %}
+    
+    <!-- Blog -->
+    <section class="blog mt50">
+      <div class="col-md-8"> 
+        <!-- Article -->
+        <article style="border-bottom:0px;">
+          <div class="row">
+            
+            <div class="col-md-12">
+              
+              {% if customer %}
+              {% else %}
+	              <h2 class="lined-heading"><span>Existing User ? Login</span></h2>
+	              
+	              <div class="col-sm-6 col-sm-offset-3">
+		              <form class="reservation-vertical clearfix" role="form" method="post" action="{{ path('renz_main_security_logincheck') }}" id="bookingformone">
+			          	  <div class="form-group">
+				            <label for="email" accesskey="E">E-mail:</label>
+				            <input name="_username" type="email" id="username" required="required" class="form-control" />
+				          </div>
+				          <div class="form-group">
+				          	<label for="email" accesskey="E">Password:</label>
+				            <input name="_password" type="password" id="password" class="form-control" required="required" />
+				          </div>
+				          <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+				          <button type="submit" class="btn btn-primary btn-block">Login</button>
+				      </form>
+			      </div>
+	              
+	              <div class="clearfix"></div>
+	              <br /><br /><br />
+              {% endif %}
+              
+              <!-- or new user will be created.. -->
+              
+              <h2 class="lined-heading"><span>Your Details</span></h2>
+              	
+				<form class="clearfix mt50" role="form" method="post" novalidate="novalidate" action="{{ path('renz_main_booking_submit') }}" name="bookingform" id="bookingform">
+				  
+				  <div class="row">
+					<div class="col-md-6">
+					  <div class="form-group">
+						<label for="firstname" accesskey="U"><span class="required">*</span> First Name</label>
+						<input name="firstname" type="text" id="firstname" class="form-control" required="required" {% if customer %}value="{{ customer.firstname }}"{% endif %} />
+					  </div>
+					</div>
+					<div class="col-md-6">
+					  <div class="form-group">
+						<label for="lastname" accesskey="E"><span class="required">*</span> Last Name</label>
+						<input name="lastname" type="text" id="lastname" class="form-control" required="required" {% if customer %}value="{{ customer.lastname }}"{% endif %} />
+					  </div>
+					</div>
+				  </div>
+				  
+				  {% if customer %}
+              	  {% else %}
+					  <div class="row">
+						<div class="col-md-6">
+						  <div class="form-group">
+							<label for="email" accesskey="E"><span class="required">*</span> Email</label>
+							<input name="email" type="text" id="email" class="form-control" value="" required="required" />
+						  </div>
+					  	</div>
+					  	<div class="col-md-6">
+						  <div class="form-group">
+							<label for="confirmemail" accesskey="E"><span class="required">*</span> Confirm Email</label>
+							<input name="confirmemail" type="text" id="confirmemail" class="form-control" value="" required="required" />
+						  </div>
+					  	</div>
+					  </div>
+					  
+					  <div class="row">
+						<div class="col-md-6">
+						  <div class="form-group">
+							<label for="password" accesskey="P"><span class="required">*</span> Password</label> <i>(This will create an account!)</i>
+							<input name="paswd" type="password" id="paswd" class="form-control" required="required" />
+						  </div>
+					  	</div>
+					  	<div class="col-md-6">
+						  <div class="form-group">
+							<label for="paswd2" accesskey="E"><span class="required">*</span> Confirm Password</label>
+							<input name="paswd2" type="password" id="paswd2" class="form-control" required="required" />
+						  </div>
+					  	</div>
+					  </div>
+				  {% endif %}
+				  
+				  <div class="form-group">
+					<label for="comments" accesskey="C">Special Requests</label>
+					<p>Please write your requests in English or Arabic. <br />Special requests cannot be guaranteed-but the accommodation will do its best to meet your needs.</p>
+					<textarea name="specialrequests" rows="5" id="specialrequests" class="form-control"></textarea>
+				  </div>
+				  
+				  <br /><br />
+				  <h2 class="lined-heading"><span>Your Address</span></h2>
+				  
+				  <div class="row">
+					<div class="col-md-6">
+					  <div class="form-group">
+						<label for="address" accesskey="U">Address</label>
+						<input name="address" type="text" id="address" class="form-control" {% if customer %}value="{{ customer.address }}"{% endif %} />
+					  </div>
+					</div>
+					<div class="col-md-6">
+					  <div class="form-group">
+						<label for="city" accesskey="E"><span class="required">*</span> City</label>
+						<input name="city" type="text" id="city" class="form-control" required="required" {% if customer %}value="{{ customer.city }}"{% endif %} />
+					  </div>
+					</div>
+				  </div>
+				  
+				  <div class="row">
+					<div class="col-md-6">
+					  <div class="form-group">
+						<label for="zipcode" accesskey="U">Zip Code</label>
+						<input name="zipcode" type="text" id="zipcode" class="form-control" {% if customer %}value="{{ customer.zip }}"{% endif %} />
+					  </div>
+					</div>
+					<div class="col-md-6">
+					  <div class="form-group">
+						<label for="country" accesskey="E"><span class="required">*</span> Country</label>
+						<select name="country" id="country" class="form-control" required="required">
+						<option value="">-Select-</option>
+							{% for country in countries %}
+								<option value="{{ country.id }}" 
+								{% if customer %}
+									{% if customer.country %}
+										{% if customer.country.id==country.id %}selected="selected"{% endif %}
+									{% endif %}
+								{% endif %}
+								>
+								{{ country.shortname }}
+								</option>
+							{% endfor %}
+						</select>
+					  </div>
+					</div>
+				  </div>
+				  
+				  <div class="row">
+					<div class="col-md-6">
+					  <div class="form-group">
+						<label for="mobile" accesskey="U"><span class="required">*</span> Mobile</label>
+						<input name="mobile" type="text" id="mobile" class="form-control" required="required" {% if customer %}value="{{ customer.mobile }}"{% endif %} />
+					  </div>
+					</div>
+				  </div>
+				  
+				  <br /><br />
+				  <h2 class="lined-heading"><span>Payment Information</span></h2>
+				  
+				  <div><img src="{{ asset('bundles/main/images/cards.jpg') }}" /></div>
+				  <br />
+				  
+				  <div class="row">
+					<div class="col-md-6">
+					  <div class="form-group">
+						<label for="cardownername" accesskey="U"><span class="required">*</span> Card Owner Name</label>
+						<input name="cardownername" type="text" id=cardownername class="form-control" required="required" {% if customer %}value="{{ customer.cardownername }}"{% endif %} />
+					  </div>
+					</div>
+				  </div>
+				  
+				  <div class="row">
+				  	<div class="col-md-6">
+					  <div class="form-group">
+						<label for="cardtype" accesskey="S"><span class="required">*</span> Credit card type</label>
+						<select name="cardtype" id="cardtype" class="form-control" required="required">
+						<option value="">-Select-</option>
+						  {% for cardtype in cardtypes %}
+								<option value="{{ cardtype.id }}" 
+								{% if customer %}
+									{% if customer.cardtype %}
+										{% if customer.cardtype.id==cardtype.id %}selected="selected"{% endif %}
+									{% endif %}
+								{% endif %}
+								>
+								{{ cardtype.title }}
+								</option>
+							{% endfor %}
+						</select>
+					  </div>
+				  	</div>
+				  	
+					<div class="col-md-6">
+					  <div class="form-group">
+						<label for="cardnumber" accesskey="U"><span class="required">*</span> Credit card number</label>
+						<input name="cardnumber" type="text" id="cardnumber" class="form-control" required="required" {% if customer %}value="{{ customer.cardnumber }}"{% endif %} />
+					  </div>
+					</div>
+				  </div>
+				  
+				  <div class="row">
+				  	<div class="col-md-6">
+					  <div class="form-group">
+						<div><label for="expirydate_month" accesskey="S"><span class="required">*</span> Expiration date</label></div>
+						<select name="expirydate_month" id="expirydate_month" class="form-control" required="required" style="width:180px; float:left;">
+						<option value="">-Select-</option>
+						  {% for cmonth in cardmonth %}
+								<option value="{{ cmonth.id }}" 
+								{% if customer %}
+									{% if customer.expiryMonth %}
+										{% if customer.expiryMonth.id==cmonth.id %}selected="selected"{% endif %}
+									{% endif %}
+								{% endif %}
+								>
+								{{ cmonth.title }}
+								</option>
+							{% endfor %}
+						</select>
+						<select name="expirydate_year" id="expirydate_year" class="form-control" required="required" style="width:150px; float:right;">
+							<option value="">-Select-</option>
+						  {% for cyear in cardyear %}
+								<option value="{{ cyear.id }}" 
+								{% if customer %}
+									{% if customer.expiryYear %}
+										{% if customer.expiryYear.id==cyear.id %}selected="selected"{% endif %}
+									{% endif %}
+								{% endif %}
+								>
+								{{ cyear.title }}
+								</option>
+							{% endfor %}
+						</select>
+						
+						<div style="clear:both;"></div>
+					  </div>
+					</div>
+				  </div>
+				  
+				  <br />
+				  <p><input type="checkbox" name="agree" id="agree" /> &nbsp;I Agree with the <b><a href="{{ path('renz_main_room_termsconditions', { 'id': policy }) }}" onclick="return popitup('{{ path('renz_main_room_termsconditions', { 'id': policy }) }}')">terms and conditions</a></b> by booking this room.</p>
+				  <br />
+				  
+				  {% if customer %}<input type="hidden" name="email" value="{{ customer.email }}" />{% endif %}
+				  <input type="hidden" name="room" value="{{ previousdata.roomid }}" />
+				  <input type="hidden" name="guests" value="{{ previousdata.guests }}" />
+				  <input type="hidden" name="dateCheckin" value="{{ previousdata.checkin }}" />
+				  <input type="hidden" name="dateCheckout" value="{{ previousdata.checkout }}" />
+				  <input type="hidden" name="totalDays" value="{{ previousdata.days }}" />
+				  
+				  <input type="hidden" name="pricecategory" value="{{ policy }}" />
+				  <input type="hidden" name="totalprice" value="{{ subtotal }}" />
+				  
+				  <button id="btn-submit" class="btn  btn-lg btn-primary"> Submit </button> | 
+			  	  <a href="{{ path('renz_main_booking_cancelbooking') }}" class="btn btn-lg btn-default">Cancel</a>
+				</form>
+				
+              
+            </div>
+            
+          </div>
+        </article>
+        
+      </div>
+    </section>
+    
+    
+    <!-- Aside -->
+    <aside class="mt50">
+      <div class="col-md-4"> 
+		
+        <h2 class="lined-heading"><span>{{ entity.title }}</span></h2>
+        
+        <a href="{{ asset('uploads/rooms_main/'~entity.path) }}" data-rel="prettyPhoto">
+			<img src="{{ asset('uploads/rooms_main/'~entity.path) }}" alt="{{ entity.title }}" class="img-thumbnail img-responsive">
+		</a>
+		
+		<br />
+		<br />
+		<h3>For: <span style="float:right;"> {{ previousdata.guests }} Guests</span></h3>
+		<h3>Check In: <span style="float:right;"> {{ previousdata.checkin }}</span></h3>
+		<h3>Check Out: <span style="float:right;"> {{ previousdata.checkout }}</span></h3>
+		<h3>Total Nights: <span style="float:right;"> {{ previousdata.days }} night(s)</span></h3>
+
+        <div>
+        	<p><h3>TOTAL BREAKDOWN SUMMARY:</b></h3>
+        	<table border="0" class="col-md-12">
+        		<tr>
+        			<td><b>DATE</b></td>
+        			<td><b>TYPE APPLIED</b></td>
+        			<td><b>PRICE</b></td>
+        		</tr>
+        		{% for rd in reservationDates %}
+	        		<tr>
+	        			<td>{{ rd[0] }}</td>
+	        			<td>{{ rd[1] }}</td>
+	        			<td>
+	        				{% if rd[1] == "NONREFUNDABLE" %}
+	        					SAR {{ entity.nonRefundablePrice }}
+	        				{% elseif rd[1] == "STANDARD" %}
+	        					SAR {{ entity.price }}
+	        				{% endif %}
+	        			</td>
+	        		</tr>
+	        	{% endfor %}
+        	</table>
+        	<br />
+        </div>
+        
+        <div class="clearfix"></div>
+
+        <h3>
+        	SubTotal: 
+        	<span style="float:right;">SAR {{ subtotal }}</span>
+        </h3>
+        
+        {% if policy==2 %}<div class="alert alert-info alert-dismissable" style="text-align:center; font-weight:bold; font-size:18px;">Non-Refundable Price</div>{% endif %}
+        
+      </div>
+    </aside>
+    
+    <!-- Rooms -->
+	{{ include('MainBundle:includes:homepage/_guestrooms.html.twig') }}
+    
+    
+  </div>
+</div>
+
+{% endblock %}

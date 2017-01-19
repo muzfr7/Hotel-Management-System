@@ -1,0 +1,16 @@
+<section class="gallery-slider mt100">
+  
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h2 class="lined-heading"><span><a href="{{ path('renz_main_page_gallery') }}" title="Click here to view all gallery photos">{{ 'site.label.galleryHighlights' | trans }}</a></span></h2>
+      </div>
+    </div>
+  </div>
+  
+  <div id="owl-gallery" class="owl-carousel">
+    
+	{{ render(controller('MainBundle:Common:galleryhighlights')) }}
+	
+  </div>
+</section>

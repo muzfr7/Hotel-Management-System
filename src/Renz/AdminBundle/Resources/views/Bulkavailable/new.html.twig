@@ -1,0 +1,85 @@
+{% extends "::admin.html.twig" %}
+
+{% block pagetitle %}Bulk Availability List{% endblock %}
+	
+{% block javascriptcode %}
+<script type="text/javascript">
+
+$(document).ready(function(){
+	
+	/* setup navigation, content boxes, etc... */
+	Administry.setup();
+});
+</script>
+{% endblock %}
+
+{% block contentsinglecolumn %}
+
+{{ form_start(form) }}
+
+	<!-- Left column/section -->
+	<section class="column width6 first">
+	
+	<h3>Add New Bulk Availability</h3>
+	
+		<fieldset>
+			<legend>Fill in details and press save..</legend>
+			
+			<div class="clearfix leading">
+				<div class="column width3 first">
+					<p>
+						{{ form_label(form.fromdate) }}<br/>
+						{{ form_widget(form.fromdate) }}
+					</p>
+				</div>
+				
+				<div class="column width3">
+					<p>
+						{{ form_label(form.todate) }}<br/>
+						{{ form_widget(form.todate) }}
+					</p>
+				</div>
+			</div>
+			
+			<div class="clearfix leading">
+				<div class="column width3 first">
+					<p>
+						{{ form_label(form.room) }}<br/>
+						{{ form_widget(form.room) }}
+					</p>
+				</div>
+				
+				<div class="column width3">
+					<p>
+						{{ form_label(form.qty) }}<br/>
+						{{ form_widget(form.qty) }}
+					</p>
+				</div>
+			</div>
+			
+			<p class="box"><input type="submit" class="btn btn-green big" value="Save"/> or <a href="{{ path('renz_admin_bulkavailable_index') }}">Cancel</a></p>
+	
+		</fieldset>
+	
+	</section>
+	<!-- End of Left column/section -->
+	
+	<!-- Right column/section -->
+	<aside class="column width2">
+		
+		<p><a href="{{ path('renz_admin_bulkavailable_index') }}" class="btn btn-special"><img SRC="{{ asset('bundles/admin/img/page_white_go.png') }}" class="icon" alt=""/>Cancel and go back</a></p>
+		 
+		<div id="rightmenu">
+			<dl class="first">
+				<dt><img width="16" height="16" alt="" SRC="img/help.png"></dt>
+				<dd><a href="#">Help</a></dd>
+				<dd class="last">If you are a new user, you should read "Getting started"</dd>							
+			</dl>
+		</div>
+		
+	</aside>
+	<!-- End of Right column/section -->
+
+{{ form_end(form) }}
+
+{% endblock %}
